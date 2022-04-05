@@ -4,19 +4,12 @@ import { useLocation } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faBook,
   faBoxOpen,
   faChartPie,
-  faCog,
   faFileAlt,
-  faHandHoldingUsd,
   faSignOutAlt,
   faTable,
   faTimes,
-  faCalendarAlt,
-  faMapPin,
-  faInbox,
-  faRocket,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   Nav,
@@ -30,7 +23,6 @@ import {
 import { Link } from "react-router-dom";
 
 import { Routes } from "../routes";
-import ThemesbergLogo from "../assets/img/themesberg.svg";
 import ReactHero from "../assets/img/technologies/react-hero-logo.svg";
 import ProfilePicture from "../assets/img/team/profile-picture-3.jpg";
 
@@ -220,7 +212,7 @@ export default (props = {}) => {
               </CollapsableNavItem>
 
               <Dropdown.Divider className="my-3 border-indigo" />
-              <CollapsableNavItem
+              {/* <CollapsableNavItem
                 eventKey="components/"
                 title="Components"
                 icon={faBoxOpen}
@@ -248,14 +240,7 @@ export default (props = {}) => {
                 <NavItem title="Tabs" link={Routes.Tabs.path} />
                 <NavItem title="Toasts" link={Routes.Toasts.path} />
                 <NavItem title="Tooltips" link={Routes.Tooltips.path} />
-              </CollapsableNavItem>
-              <NavItem
-                external
-                title="Themesberg"
-                link="https://themesberg.com"
-                target="_blank"
-                image={ThemesbergLogo}
-              />
+              </CollapsableNavItem> */}
             </Nav>
           </div>
         </SimpleBar>

@@ -13,29 +13,10 @@ import ResetPassword from "./examples/ResetPassword";
 import Lock from "./examples/Lock";
 import NotFoundPage from "./examples/NotFound";
 import ServerError from "./examples/ServerError";
-
 // components
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import Preloader from "../components/Preloader";
-
-import Accordion from "./components/Accordion";
-import Alerts from "./components/Alerts";
-import Badges from "./components/Badges";
-import Breadcrumbs from "./components/Breadcrumbs";
-import Buttons from "./components/Buttons";
-import Forms from "./components/Forms";
-import Modals from "./components/Modals";
-import Navs from "./components/Navs";
-import Navbars from "./components/Navbars";
-import Pagination from "./components/Pagination";
-import Popovers from "./components/Popovers";
-import Progress from "./components/Progress";
-import Tables from "./components/Tables";
-import Tabs from "./components/Tabs";
-import Tooltips from "./components/Tooltips";
-import Toasts from "./components/Toasts";
 
 const RouteWithLoader = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
@@ -66,19 +47,6 @@ const RouteWithSidebar = ({ component: Component, ...rest }) => {
     return () => clearTimeout(timer);
   }, []);
 
-  const localStorageIsSettingsVisible = () => {
-    return localStorage.getItem("settingsVisible") === "false" ? false : true;
-  };
-
-  const [showSettings, setShowSettings] = useState(
-    localStorageIsSettingsVisible
-  );
-
-  const toggleSettings = () => {
-    setShowSettings(!showSettings);
-    localStorage.setItem("settingsVisible", !showSettings);
-  };
-
   return (
     <Route
       {...rest}
@@ -90,10 +58,6 @@ const RouteWithSidebar = ({ component: Component, ...rest }) => {
           <main className="content">
             <Navbar />
             <Component {...props} />
-            <Footer
-              toggleSettings={toggleSettings}
-              showSettings={showSettings}
-            />
           </main>
         </>
       )}
@@ -138,36 +102,6 @@ export default () => (
       path={Routes.BootstrapTables.path}
       component={BootstrapTables}
     />
-
-    {/* components */}
-    <RouteWithSidebar
-      exact
-      path={Routes.Accordions.path}
-      component={Accordion}
-    />
-    <RouteWithSidebar exact path={Routes.Alerts.path} component={Alerts} />
-    <RouteWithSidebar exact path={Routes.Badges.path} component={Badges} />
-    <RouteWithSidebar
-      exact
-      path={Routes.Breadcrumbs.path}
-      component={Breadcrumbs}
-    />
-    <RouteWithSidebar exact path={Routes.Buttons.path} component={Buttons} />
-    <RouteWithSidebar exact path={Routes.Forms.path} component={Forms} />
-    <RouteWithSidebar exact path={Routes.Modals.path} component={Modals} />
-    <RouteWithSidebar exact path={Routes.Navs.path} component={Navs} />
-    <RouteWithSidebar exact path={Routes.Navbars.path} component={Navbars} />
-    <RouteWithSidebar
-      exact
-      path={Routes.Pagination.path}
-      component={Pagination}
-    />
-    <RouteWithSidebar exact path={Routes.Popovers.path} component={Popovers} />
-    <RouteWithSidebar exact path={Routes.Progress.path} component={Progress} />
-    <RouteWithSidebar exact path={Routes.Tables.path} component={Tables} />
-    <RouteWithSidebar exact path={Routes.Tabs.path} component={Tabs} />
-    <RouteWithSidebar exact path={Routes.Tooltips.path} component={Tooltips} />
-    <RouteWithSidebar exact path={Routes.Toasts.path} component={Toasts} />
 
     <Redirect to={Routes.NotFound.path} />
   </Switch>
