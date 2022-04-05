@@ -4,10 +4,8 @@ import { useLocation } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faChartPie,
   faFileAlt,
   faSignOutAlt,
-  faTable,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -123,7 +121,7 @@ export default (props = {}) => {
         <Navbar.Brand
           className="me-lg-5"
           as={Link}
-          to={Routes.DashboardOverview.path}
+          to={Routes.Interviewer.path}
         >
           <Image src={ReactHero} className="navbar-brand-light" />
         </Navbar.Brand>
@@ -157,7 +155,7 @@ export default (props = {}) => {
                     to={Routes.Signin.path}
                     className="text-dark"
                   >
-                    <FontAwesomeIcon icon={faSignOutAlt} className="me-2" />{" "}
+                    <FontAwesomeIcon icon={faSignOutAlt} className="me-2" />
                     Sign Out
                   </Button>
                 </div>
@@ -170,22 +168,16 @@ export default (props = {}) => {
               </Nav.Link>
             </div>
             <Nav className="flex-column pt-3 pt-md-0">
+              <Navbar.Brand>
+                <h4>Interview System</h4>
+              </Navbar.Brand>
               <NavItem
-                title="Overview"
-                link={Routes.DashboardOverview.path}
-                icon={faChartPie}
+                title="InterViewer"
+                link={Routes.Interviewer.path}
+                // icon={faChartPie}
               />
 
-              <CollapsableNavItem
-                eventKey="tables/"
-                title="Tables"
-                icon={faTable}
-              >
-                <NavItem
-                  title="Bootstrap Table"
-                  link={Routes.BootstrapTables.path}
-                />
-              </CollapsableNavItem>
+              <NavItem title="Users" link={Routes.Users.path} />
 
               <CollapsableNavItem
                 eventKey="examples/"

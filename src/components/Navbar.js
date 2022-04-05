@@ -1,13 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBell,
-  faCog,
-  faEnvelopeOpen,
-  faSearch,
-  faSignOutAlt,
-  faUserShield,
-} from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { faUserCircle } from "@fortawesome/free-regular-svg-icons";
 import {
   Nav,

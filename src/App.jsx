@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import { Routes } from "../routes";
+import { Routes } from "./routes";
 
 // pages
 
-import DashboardOverview from "./DashboardOverview";
-import BootstrapTables from "./BootstrapTables";
-import Signin from "./examples/Signin";
-import Signup from "./examples/Signup";
-import ForgotPassword from "./examples/ForgotPassword";
-import ResetPassword from "./examples/ResetPassword";
-import Lock from "./examples/Lock";
-import NotFoundPage from "./examples/NotFound";
-import ServerError from "./examples/ServerError";
+import Interviewer from "./pages/Interviewer";
+import Users from "./pages/Users";
+import Signin from "./pages/examples/Signin";
+import Signup from "./pages/examples/Signup";
+import ForgotPassword from "./pages/examples/ForgotPassword";
+import ResetPassword from "./pages/examples/ResetPassword";
+import Lock from "./pages/examples/Lock";
+import NotFoundPage from "./pages/examples/NotFound";
+import ServerError from "./pages/examples/ServerError";
 // components
-import Sidebar from "../components/Sidebar";
-import Navbar from "../components/Navbar";
-import Preloader from "../components/Preloader";
+import Sidebar from "./components/Sidebar";
+import Navbar from "./components/Navbar";
+import Preloader from "./components/Preloader";
+import UserFrom from "./pages/UserFrom";
 
 const RouteWithLoader = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
@@ -90,18 +91,15 @@ export default () => (
       path={Routes.ServerError.path}
       component={ServerError}
     />
+    <RouteWithLoader exact path={Routes.UserForm.path} component={UserFrom} />
 
     {/* pages */}
     <RouteWithSidebar
       exact
-      path={Routes.DashboardOverview.path}
-      component={DashboardOverview}
+      path={Routes.Interviewer.path}
+      component={Interviewer}
     />
-    <RouteWithSidebar
-      exact
-      path={Routes.BootstrapTables.path}
-      component={BootstrapTables}
-    />
+    <RouteWithSidebar exact path={Routes.Users.path} component={Users} />
 
     <Redirect to={Routes.NotFound.path} />
   </Switch>
