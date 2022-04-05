@@ -2,7 +2,7 @@ export const Routes = {
   // pages
 
   DashboardOverview: { path: "/" },
-  BootstrapTables: { path: "/tables/bootstrap-tables" },
+  BootstrapTables: { path: "/bootstrap-tables" },
   Billing: { path: "/examples/billing" },
   Invoice: { path: "/examples/invoice" },
   Signin: { path: "/examples/sign-in" },

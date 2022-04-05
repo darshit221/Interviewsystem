@@ -4,8 +4,8 @@ import { Routes } from "../routes";
 
 // pages
 
-import DashboardOverview from "./dashboard/DashboardOverview";
-import BootstrapTables from "./tables/BootstrapTables";
+import DashboardOverview from "./DashboardOverview";
+import BootstrapTables from "./BootstrapTables";
 import Signin from "./examples/Signin";
 import Signup from "./examples/Signup";
 import ForgotPassword from "./examples/ForgotPassword";
