@@ -4,6 +4,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@themesberg/react-bootstrap";
 import { Link } from "react-router-dom";
 import { Routes } from "../routes";
+import { TransactionsTable } from "../components/Tables";
 
 export default () => {
   return (
@@ -17,9 +18,10 @@ export default () => {
           className="text-dark"
         >
           <FontAwesomeIcon icon={faPlus} className="me-2" />
-          ADD USER
+          Add User
         </Button>
       </div>
+      <TransactionsTable />
     </>
   );
 };

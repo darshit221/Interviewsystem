@@ -18,6 +18,7 @@ import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
 import Preloader from "./components/Preloader";
 import UserFrom from "./pages/UserFrom";
+import DetailsForm from "./pages/DetailsForm";
 
 const RouteWithLoader = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
@@ -91,7 +92,6 @@ export default () => (
       path={Routes.ServerError.path}
       component={ServerError}
     />
-    <RouteWithLoader exact path={Routes.UserForm.path} component={UserFrom} />
 
     {/* pages */}
     <RouteWithSidebar
@@ -100,7 +100,12 @@ export default () => (
       component={Interviewer}
     />
     <RouteWithSidebar exact path={Routes.Users.path} component={Users} />
-
+    <RouteWithSidebar exact path={Routes.UserForm.path} component={UserFrom} />
+    <RouteWithSidebar
+      exact
+      path={Routes.DetailForm.path}
+      component={DetailsForm}
+    />
     <Redirect to={Routes.NotFound.path} />
   </Switch>
 );
