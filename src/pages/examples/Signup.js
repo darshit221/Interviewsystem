@@ -33,7 +33,7 @@ export default () => {
           <p className="text-center">
             <Card.Link
               as={Link}
-              to={Routes.Interviewer.path}
+              to={Routes.InterviewResult.path}
               className="text-gray-700"
             >
               <FontAwesomeIcon icon={faAngleLeft} className="me-2" /> Back to

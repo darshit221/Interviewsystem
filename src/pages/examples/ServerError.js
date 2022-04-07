@@ -36,7 +36,7 @@ export default () => {
                 as={Link}
                 variant="primary"
                 className="animate-hover"
-                to={Routes.Interviewer.path}
+                to={Routes.InterviewResult.path}
               >
                 <FontAwesomeIcon
                   icon={faChevronLeft}

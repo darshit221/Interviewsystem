@@ -24,8 +24,20 @@ import { Link } from "react-router-dom";
 
 import { Routes } from "../../routes";
 import BgImage from "../../assets/img/illustrations/signin.svg";
+import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import authActions from "../../redux/Auth/action";
 
 export default () => {
+  const dispatch = useDispatch();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data) => {
+    dispatch(authActions.loginRequest(data));
+  };
   return (
     <main>
       <section className="d-flex align-items-center my-5 mt-lg-6 mb-lg-5">
@@ -33,7 +45,7 @@ export default () => {
           <p className="text-center">
             <Card.Link
               as={Link}
-              to={Routes.Interviewer.path}
+              to={Routes.InterviewResult.path}
               className="text-gray-700"
             >
               <FontAwesomeIcon icon={faAngleLeft} className="me-2" /> Back to
@@ -52,7 +64,7 @@ export default () => {
                 <div className="text-center text-md-center mb-4 mt-md-0">
                   <h3 className="mb-0">Sign in to our platform</h3>
                 </div>
-                <Form className="mt-4">
+                <Form className="mt-4" onSubmit={handleSubmit(onSubmit)}>
                   <Form.Group id="email" className="mb-4">
                     <Form.Label>Your Email</Form.Label>
                     <InputGroup>
@@ -61,11 +73,20 @@ export default () => {
                       </InputGroup.Text>
                       <Form.Control
                         autoFocus
-                        required
                         type="email"
                         placeholder="example@company.com"
+                        {...register("email", {
+                          required: "requierd",
+                          pattern: {
+                            value: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/,
+                            message: "Invalid",
+                          },
+                        })}
                       />
                     </InputGroup>
+                    <p className="text-danger">
+                      {errors.email && errors.email.message}
+                    </p>
                   </Form.Group>
                   <Form.Group>
                     <Form.Group id="password" className="mb-4">
@@ -75,11 +96,27 @@ export default () => {
                           <FontAwesomeIcon icon={faUnlockAlt} />
                         </InputGroup.Text>
                         <Form.Control
-                          required
                           type="password"
                           placeholder="Password"
+                          {...register("password", {
+                            required: "You must specify a password",
+
+                            minLength: {
+                              value: 4,
+                              message:
+                                "Password must have at least 4 characters",
+                            },
+                            maxLength: {
+                              value: 16,
+                              message:
+                                "Password must have at least 16 characters",
+                            },
+                          })}
                         />
                       </InputGroup>
+                      <p className="text-danger">
+                        {errors.password && errors.password.message}
+                      </p>
                     </Form.Group>
                     <div className="d-flex justify-content-between align-items-center mb-4">
                       <Form.Check type="checkbox">

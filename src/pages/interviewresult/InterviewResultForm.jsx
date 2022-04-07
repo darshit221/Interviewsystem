@@ -12,10 +12,10 @@ import {
   InputGroup,
 } from "@themesberg/react-bootstrap";
 import { useForm } from "react-hook-form";
-import { Routes } from "../routes";
+import { Routes } from "../../routes";
 import { useHistory } from "react-router-dom";
 
-const UserFrom = () => {
+const InterviewResultForm = () => {
   const [birthday, setBirthday] = useState("");
   const history = useHistory();
   const {
@@ -71,9 +71,9 @@ const UserFrom = () => {
             </Col>
             <Col md={6} className="mb-3">
               <Form.Group className="mb-3">
-                <Form.Label>Interviewer</Form.Label>
+                <Form.Label>InterviewResult</Form.Label>
                 <Form.Select
-                  {...register("Interviewer", { required: "requierd" })}
+                  {...register("InterviewResult", { required: "requierd" })}
                 >
                   <option value=""></option>
                   <option value="Dhaval">Dhaval</option>
@@ -82,7 +82,7 @@ const UserFrom = () => {
                   <option value="Malay">Malay</option>
                 </Form.Select>
                 <p className="text-danger">
-                  {errors.Interviewer && errors.Interviewer.message}
+                  {errors.InterviewResult && errors.InterviewResult.message}
                 </p>
               </Form.Group>
             </Col>
@@ -257,7 +257,7 @@ const UserFrom = () => {
               className="mx-5"
               variant="primary"
               type="submit"
-              onClick={() => history.push(Routes.Interviewer.path)}
+              onClick={() => history.push(Routes.InterviewResult.path)}
             >
               Back To HomePage
             </Button>
@@ -268,4 +268,4 @@ const UserFrom = () => {
   );
 };
 
-export default UserFrom;
+export default InterviewResultForm;

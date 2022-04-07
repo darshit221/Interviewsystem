@@ -2,9 +2,9 @@ export const Routes = {
   // pages
 
   Signin: { path: "/" },
-  Interviewer: { path: "/interviewer" },
+  InterviewResult: { path: "/interviewresult" },
   Users: { path: "/users" },
-  UserForm: { path: "/interviewer/userform" },
+  UserForm: { path: "/interviewresult/userform" },
   DetailForm: { path: "/detailform" },
   Billing: { path: "/examples/billing" },
   Invoice: { path: "/examples/invoice" },

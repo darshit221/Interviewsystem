@@ -12,10 +12,10 @@ import {
 } from "@themesberg/react-bootstrap";
 import { useForm } from "react-hook-form";
 import DatePicker from "react-date-picker";
-import { Routes } from "../routes";
+import { Routes } from "../../routes";
 import { useHistory } from "react-router-dom";
 
-const DetailsForm = () => {
+const UserForm = () => {
   const [dob, onChange] = useState(new Date());
   const history = useHistory();
 
@@ -123,8 +123,8 @@ const DetailsForm = () => {
                         "password should contain atleast one number and one special character",
                     },
                     maxLength: {
-                      value: 10,
-                      message: "Password must have at least 10 characters",
+                      value: 16,
+                      message: "Password must have at least 16 characters",
                     },
                     minLength: {
                       value: 4,
@@ -141,7 +141,7 @@ const DetailsForm = () => {
               <Form.Group>
                 <Form.Label>Comfirm Password</Form.Label>
                 <Form.Control
-                  type="Comfirm password"
+                  type="password"
                   placeholder="Comfirm Password"
                   {...register("comfirmpassword", {
                     validate: (value) =>
@@ -187,4 +187,4 @@ const DetailsForm = () => {
   );
 };
 
-export default DetailsForm;
+export default UserForm;

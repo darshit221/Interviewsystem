@@ -121,7 +121,7 @@ export default (props = {}) => {
         <Navbar.Brand
           className="me-lg-5"
           as={Link}
-          to={Routes.Interviewer.path}
+          to={Routes.InterviewResult.path}
         >
           <Image src={ReactHero} className="navbar-brand-light" />
         </Navbar.Brand>
@@ -172,8 +172,8 @@ export default (props = {}) => {
                 <h4>Interview System</h4>
               </Navbar.Brand>
               <NavItem
-                title="InterViewer"
-                link={Routes.Interviewer.path}
+                title="InterView Result"
+                link={Routes.InterviewResult.path}
                 // icon={faChartPie}
               />
 

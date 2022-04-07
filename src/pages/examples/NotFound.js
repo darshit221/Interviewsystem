@@ -26,7 +26,7 @@ export default () => {
               className="text-center d-flex align-items-center justify-content-center"
             >
               <div>
-                <Card.Link as={Link} to={Routes.Interviewer.path}>
+                <Card.Link as={Link} to={Routes.InterviewResult.path}>
                   <Image src={NotFoundImage} className="img-fluid w-75" />
                 </Card.Link>
                 <h1 className="text-primary mt-5">
@@ -40,7 +40,7 @@ export default () => {
                   as={Link}
                   variant="primary"
                   className="animate-hover"
-                  to={Routes.Interviewer.path}
+                  to={Routes.InterviewResult.path}
                 >
                   <FontAwesomeIcon
                     icon={faChevronLeft}
