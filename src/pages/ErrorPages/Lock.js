@@ -17,7 +17,7 @@ import {
 } from "@themesberg/react-bootstrap";
 import { Link } from "react-router-dom";
 
-import { Routes } from "../../routes";
+import { routes } from "../../routes";
 import BgImage from "../../assets/img/illustrations/signin.svg";
 import Profile3 from "../../assets/img/team/profile-picture-3.jpg";
 
@@ -37,7 +37,7 @@ export default () => {
           <p className="text-center">
             <Card.Link
               as={Link}
-              to={Routes.InterViwer.path}
+              to={routes.InterViwer.path}
               className="text-gray-700"
             >
               <FontAwesomeIcon icon={faAngleLeft} className="me-2" /> Back to

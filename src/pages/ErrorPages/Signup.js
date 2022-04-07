@@ -22,7 +22,7 @@ import {
 } from "@themesberg/react-bootstrap";
 import { Link } from "react-router-dom";
 
-import { Routes } from "../../routes";
+import { routes } from "../../routes";
 import BgImage from "../../assets/img/illustrations/signin.svg";
 
 export default () => {
@@ -33,7 +33,7 @@ export default () => {
           <p className="text-center">
             <Card.Link
               as={Link}
-              to={Routes.InterviewResult.path}
+              to={routes.InterviewResult.path}
               className="text-gray-700"
             >
               <FontAwesomeIcon icon={faAngleLeft} className="me-2" /> Back to
@@ -133,7 +133,7 @@ export default () => {
                     Already have an account?
                     <Card.Link
                       as={Link}
-                      to={Routes.Signin.path}
+                      to={routes.Signin.path}
                       className="fw-bold"
                     >
                       {` Login here `}

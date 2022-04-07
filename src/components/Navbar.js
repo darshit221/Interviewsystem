@@ -11,10 +11,12 @@ import {
   Container,
   InputGroup,
 } from "@themesberg/react-bootstrap";
-
 import Profile3 from "../assets/img/team/profile-picture-3.jpg";
+import { useDispatch } from "react-redux";
+import authActions from "../redux/Auth/action";
 
 export default (props) => {
+  const dispatch = useDispatch();
   return (
     <Navbar variant="dark" expanded className="ps-0 pe-2 pb-0">
       <Container fluid className="px-0">
@@ -52,7 +54,10 @@ export default (props) => {
                   Profile
                 </Dropdown.Item>
                 <Dropdown.Divider />
-                <Dropdown.Item className="fw-bold">
+                <Dropdown.Item
+                  className="fw-bold"
+                  onClick={() => dispatch(authActions.logout())}
+                >
                   <FontAwesomeIcon
                     icon={faSignOutAlt}
                     className="text-danger me-2"

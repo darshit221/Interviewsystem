@@ -31,23 +31,20 @@ export default (state = initState, action) => {
         loading: false,
         message: action.payload,
       };
-    // case actions.LOGOUT_REQUEST:
-    //   return {
-    //     ...initState,
-    //     action: action.type,
-    //   };
-    // case actions.LOGOUT_SUCCESS:
-    //   return {
-    //     ...initState,
-    //     user: {},
-    //     token: null,
-    //     action: action.type,
-    //   };
-    // case actions.LOGOUT_ERROR:
-    //   return {
-    //     ...state,
-    //     action: action.type,
-    //   };
+    case actions.LOGOUT_REQUEST:
+      return {
+        ...initState,
+      };
+    case actions.LOGOUT_SUCCESS:
+      return {
+        ...initState,
+        user: {},
+        token: null,
+      };
+    case actions.LOGOUT_ERROR:
+      return {
+        ...state,
+      };
     default:
       return state;
   }

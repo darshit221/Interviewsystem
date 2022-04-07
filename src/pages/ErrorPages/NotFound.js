@@ -12,7 +12,7 @@ import {
 
 import { Link } from "react-router-dom";
 
-import { Routes } from "../../routes";
+import { routes } from "../../routes";
 import NotFoundImage from "../../assets/img/illustrations/404.svg";
 
 export default () => {
@@ -26,7 +26,7 @@ export default () => {
               className="text-center d-flex align-items-center justify-content-center"
             >
               <div>
-                <Card.Link as={Link} to={Routes.InterviewResult.path}>
+                <Card.Link as={Link} to={routes.InterviewResult.path}>
                   <Image src={NotFoundImage} className="img-fluid w-75" />
                 </Card.Link>
                 <h1 className="text-primary mt-5">
@@ -40,7 +40,7 @@ export default () => {
                   as={Link}
                   variant="primary"
                   className="animate-hover"
-                  to={Routes.InterviewResult.path}
+                  to={routes.InterviewResult.path}
                 >
                   <FontAwesomeIcon
                     icon={faChevronLeft}

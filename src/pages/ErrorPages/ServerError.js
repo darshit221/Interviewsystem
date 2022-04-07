@@ -10,7 +10,7 @@ import {
 } from "@themesberg/react-bootstrap";
 import { Link } from "react-router-dom";
 
-import { Routes } from "../../routes";
+import { routes } from "../../routes";
 import ErrorImage from "../../assets/img/illustrations/500.svg";
 
 export default () => {
@@ -36,7 +36,7 @@ export default () => {
                 as={Link}
                 variant="primary"
                 className="animate-hover"
-                to={Routes.InterviewResult.path}
+                to={routes.InterviewResult.path}
               >
                 <FontAwesomeIcon
                   icon={faChevronLeft}

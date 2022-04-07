@@ -12,7 +12,7 @@ import {
 } from "@themesberg/react-bootstrap";
 import { useForm } from "react-hook-form";
 import DatePicker from "react-date-picker";
-import { Routes } from "../../routes";
+import { routes } from "../../routes";
 import { useHistory } from "react-router-dom";
 
 const UserForm = () => {
@@ -176,7 +176,7 @@ const UserForm = () => {
               className="mx-5"
               variant="primary"
               type="submit"
-              onClick={() => history.push(Routes.Users.path)}
+              onClick={() => history.push(routes.Users.path)}
             >
               Back To HomePage
             </Button>

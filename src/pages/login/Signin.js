@@ -22,7 +22,7 @@ import {
 } from "@themesberg/react-bootstrap";
 import { Link } from "react-router-dom";
 
-import { Routes } from "../../routes";
+import { routes } from "../../routes";
 import BgImage from "../../assets/img/illustrations/signin.svg";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
@@ -45,7 +45,7 @@ export default () => {
           <p className="text-center">
             <Card.Link
               as={Link}
-              to={Routes.InterviewResult.path}
+              to={routes.InterviewResult.path}
               className="text-gray-700"
             >
               <FontAwesomeIcon icon={faAngleLeft} className="me-2" /> Back to
@@ -166,7 +166,7 @@ export default () => {
                     Not registered?
                     <Card.Link
                       as={Link}
-                      to={Routes.Signup.path}
+                      to={routes.Signup.path}
                       className="fw-bold"
                     >
                       {` Create account `}

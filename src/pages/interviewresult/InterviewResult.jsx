@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@themesberg/react-bootstrap";
 import { Link } from "react-router-dom";
-import { Routes } from "../../routes";
+import { routes } from "../../routes";
 import { TransactionsTable } from "../../components/Tables";
 
 export default () => {
@@ -14,7 +14,7 @@ export default () => {
           as={Link}
           variant="secondary"
           size="xm"
-          to={Routes.UserForm.path}
+          to={routes.InterviewResultForm.path}
           className="text-dark"
         >
           <FontAwesomeIcon icon={faPlus} className="me-2" />

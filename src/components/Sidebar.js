@@ -19,7 +19,7 @@ import {
 } from "@themesberg/react-bootstrap";
 import { Link } from "react-router-dom";
 
-import { Routes } from "../routes";
+import { routes } from "../routes";
 import ReactHero from "../assets/img/technologies/react-hero-logo.svg";
 import ProfilePicture from "../assets/img/team/profile-picture-3.jpg";
 
@@ -121,7 +121,7 @@ export default (props = {}) => {
         <Navbar.Brand
           className="me-lg-5"
           as={Link}
-          to={Routes.InterviewResult.path}
+          to={routes.InterviewResult.path}
         >
           <Image src={ReactHero} className="navbar-brand-light" />
         </Navbar.Brand>
@@ -152,7 +152,7 @@ export default (props = {}) => {
                     as={Link}
                     variant="secondary"
                     size="xs"
-                    to={Routes.Signin.path}
+                    to={routes.Signin.path}
                     className="text-dark"
                   >
                     <FontAwesomeIcon icon={faSignOutAlt} className="me-2" />
@@ -173,32 +173,32 @@ export default (props = {}) => {
               </Navbar.Brand>
               <NavItem
                 title="InterView Result"
-                link={Routes.InterviewResult.path}
+                link={routes.InterviewResult.path}
                 // icon={faChartPie}
               />
 
-              <NavItem title="Users" link={Routes.Users.path} />
+              <NavItem title="Users" link={routes.Users.path} />
 
               <CollapsableNavItem
                 eventKey="examples/"
                 title="Page Examples"
                 icon={faFileAlt}
               >
-                <NavItem title="Sign In" link={Routes.Signin.path} />
-                <NavItem title="Sign Up" link={Routes.Signup.path} />
+                <NavItem title="Sign In" link={routes.Signin.path} />
+                <NavItem title="Sign Up" link={routes.Signup.path} />
                 <NavItem
                   title="Forgot password"
-                  link={Routes.ForgotPassword.path}
+                  link={routes.ForgotPassword.path}
                 />
                 <NavItem
                   title="Reset password"
-                  link={Routes.ResetPassword.path}
+                  link={routes.ResetPassword.path}
                 />
-                <NavItem title="Lock" link={Routes.Lock.path} />
-                <NavItem title="404 Not Found" link={Routes.NotFound.path} />
+                <NavItem title="Lock" link={routes.Lock.path} />
+                <NavItem title="404 Not Found" link={routes.NotFound.path} />
                 <NavItem
                   title="500 Server Error"
-                  link={Routes.ServerError.path}
+                  link={routes.ServerError.path}
                 />
               </CollapsableNavItem>
 

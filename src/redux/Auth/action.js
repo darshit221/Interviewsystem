@@ -42,23 +42,23 @@ const actions = {
   /**
    * logs user out
    */
-  // logout: () => ({
-  //   type: actions.LOGOUT_REQUEST,
-  // }),
+  logout: () => ({
+    type: actions.LOGOUT_REQUEST,
+  }),
 
-  // /**
-  //  * logging out success.
-  //  */
-  // logoutSuccess: () => ({
-  //   type: actions.LOGOUT_SUCCESS,
-  // }),
+  /**
+   * logging out success.
+   */
+  logoutSuccess: () => ({
+    type: actions.LOGOUT_SUCCESS,
+  }),
 
-  // /**
-  //  * something went wrong while logging out.
-  //  */
-  // logoutError: () => ({
-  //   type: actions.LOGOUT_ERROR,
-  // }),
+  /**
+   * something went wrong while logging out.
+   */
+  logoutError: () => ({
+    type: actions.LOGOUT_ERROR,
+  }),
 };
 
 export default actions;

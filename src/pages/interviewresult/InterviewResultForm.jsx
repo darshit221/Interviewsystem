@@ -12,7 +12,7 @@ import {
   InputGroup,
 } from "@themesberg/react-bootstrap";
 import { useForm } from "react-hook-form";
-import { Routes } from "../../routes";
+import { routes } from "../../routes";
 import { useHistory } from "react-router-dom";
 
 const InterviewResultForm = () => {
@@ -257,7 +257,7 @@ const InterviewResultForm = () => {
               className="mx-5"
               variant="primary"
               type="submit"
-              onClick={() => history.push(Routes.InterviewResult.path)}
+              onClick={() => history.push(routes.InterviewResult.path)}
             >
               Back To HomePage
             </Button>
