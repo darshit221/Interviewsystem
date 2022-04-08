@@ -20,13 +20,22 @@ import { Link } from "react-router-dom";
 
 import { routes } from "../../routes";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import actions from "../../redux/InterviewResult/action";
 
 export default () => {
   const dispatch = useDispatch();
-  useEffect(() => {}, []);
-  dispatch(actions.getInterviewResult());
+
+  useEffect(() => {
+    dispatch(actions.getInterviewResult());
+  }, []);
+
+  const { interviewerList } = useSelector((state) => state.interviewResult);
+  console.log(interviewerList);
+
+  const interviewResultDeleteHandler = (_id) => {
+    dispatch(actions.deleteInterviewResult(_id));
+  };
   return (
     <>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
@@ -46,70 +55,38 @@ export default () => {
           <Table hover className="user-table align-items-center">
             <thead>
               <tr>
-                <th className="border-bottom">#</th>
-                <th className="border-bottom">Bill For</th>
-                <th className="border-bottom">Issue Date</th>
-                <th className="border-bottom">Due Date</th>
-                <th className="border-bottom">Total</th>
-                <th className="border-bottom">Status</th>
+                <th className="border-bottom">User Name</th>
+                <th className="border-bottom">Interviwer Name</th>
+                <th className="border-bottom">Round</th>
                 <th className="border-bottom">Action</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>
-                  <Card.Link className="fw-normal"></Card.Link>
-                </td>
-                <td>
-                  <span className="fw-normal"></span>
-                </td>
-
-                <td>
-                  <span className="fw-normal"></span>
-                </td>
-
-                <td>
-                  <span className="fw-normal"></span>
-                </td>
-
-                <td>
-                  <span className="fw-normal"></span>
-                </td>
-
-                <td>
-                  <span className="fw-normal"></span>
-                </td>
-
-                <td>
-                  <Dropdown as={ButtonGroup}>
-                    <Dropdown.Toggle
-                      as={Button}
-                      split
-                      variant="link"
-                      className="text-dark m-0 p-0"
-                    >
-                      <span className="icon icon-sm">
-                        <FontAwesomeIcon
-                          icon={faEllipsisH}
-                          className="icon-dark"
-                        />
-                      </span>
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                      {/* <Dropdown.Item>
-                <FontAwesomeIcon icon={faEye} className="me-2" /> View Details
-              </Dropdown.Item> */}
-                      <Dropdown.Item>
-                        <FontAwesomeIcon icon={faEdit} className="me-2" /> Edit
-                      </Dropdown.Item>
-                      <Dropdown.Item className="text-danger">
-                        <FontAwesomeIcon icon={faTrashAlt} className="me-2" />{" "}
+              {interviewerList.map((value) => {
+                const { _id, name, interviewer, rounds } = value;
+                return (
+                  <tr key={_id}>
+                    <td>
+                      <span className="fw-normal">{name}</span>
+                    </td>
+                    <td>
+                      <span className="fw-normal">{interviewer}</span>
+                    </td>
+                    <td>
+                      <span className="fw-normal">{rounds}</span>
+                    </td>
+                    <td>
+                      <Button>
+                        Edit <FontAwesomeIcon icon={faEdit} className="me-2" />
+                      </Button>
+                      <Button onClick={() => interviewResultDeleteHandler(_id)}>
                         Remove
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </td>
-              </tr>
+                        <FontAwesomeIcon icon={faTrashAlt} className="me-2" />
+                      </Button>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </Table>
           <Card.Footer className="px-3 border-0 d-lg-flex align-items-center justify-content-between">

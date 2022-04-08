@@ -47,7 +47,14 @@ const axiosGet = async (url) => {
 };
 
 /**
- * Update request from axios.
+ * Delete call from axios
  */
+const axiosDelete = async (url) => {
+  let request = await axios.delete(`${BASE_URL}/${url}`, getHeaders());
+  // if (request.data && request.data.message) {
+  //   await successMessage(request.data.message);
+  // }
+  return request;
+};
 
-export { axiosGet, axiosPost };
+export { axiosGet, axiosPost, axiosDelete };

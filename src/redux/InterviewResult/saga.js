@@ -1,6 +1,6 @@
 import { all, takeEvery, takeLatest, put } from "redux-saga/effects";
 import actions from "./action";
-import { axiosPost, axiosGet } from "../axiosHelper";
+import { axiosPost, axiosGet, axiosDelete } from "../axiosHelper";
 import { push } from "connected-react-router";
 
 /**
@@ -33,9 +33,14 @@ export function* getInterviewResult() {
   }
 }
 
+export function* deleteInterviewResult({ userID }) {
+  const { data } = yield axiosDelete(`deleteInterViewResult/${userID}`);
+}
+
 export default function* interviewSaga() {
   yield all([
     takeLatest(actions.CREATE_INTERVIEW_RESULT_REQUEST, createInterviewResult),
     takeEvery(actions.GET_INTERVIEW_RESULT_REQUEST, getInterviewResult),
+    takeLatest(actions.DELETE_INTERVIEW_RESULT_REQUEST, deleteInterviewResult),
   ]);
 }

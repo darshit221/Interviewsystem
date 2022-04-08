@@ -49,7 +49,7 @@ const InterviewResultForm = () => {
                   </InputGroup.Text>
                   <Form.Control
                     type="text"
-                    {...register("Date", { required: "requierd" })}
+                    {...register("date", { required: "requierd" })}
                     value={Day ? moment(Day).format("MM/DD/YYYY") : ""}
                     placeholder="mm/dd/yyyy"
                     onFocus={openCalendar}
@@ -57,7 +57,7 @@ const InterviewResultForm = () => {
                 </InputGroup>
               )}
             />
-            <p className="text-danger">{errors.Date && errors.Date.message}</p>
+            <p className="text-danger">{errors.date && errors.date.message}</p>
           </Form.Group>
           <Row>
             <Col md={6} className="mb-3">
@@ -66,10 +66,10 @@ const InterviewResultForm = () => {
                 <Form.Control
                   type="text"
                   placeholder="Name"
-                  {...register("Name", { required: "requierd" })}
+                  {...register("name", { required: "requierd" })}
                 />
                 <p className="text-danger">
-                  {errors.Name && errors.Name.message}
+                  {errors.name && errors.name.message}
                 </p>
               </Form.Group>
             </Col>
@@ -98,7 +98,7 @@ const InterviewResultForm = () => {
                 <Form.Label>Technologies</Form.Label>
                 <Form.Select
                   required
-                  {...register("Technologies", { required: "requierd" })}
+                  {...register("technology", { required: "requierd" })}
                 >
                   <option value="">Technologies...</option>
                   <option value="React">React</option>
@@ -107,7 +107,7 @@ const InterviewResultForm = () => {
                   <option value="Node">Node</option>
                 </Form.Select>
                 <p className="text-danger">
-                  {errors.Technologies && errors.Technologies.message}
+                  {errors.technology && errors.technology.message}
                 </p>
               </Form.Group>
             </Col>
@@ -117,10 +117,10 @@ const InterviewResultForm = () => {
                 <Form.Control
                   type="number"
                   placeholder="Experince"
-                  {...register("Experince", { required: "requierd" })}
+                  {...register("experience", { required: "requierd" })}
                 />
                 <p className="text-danger">
-                  {errors.Experince && errors.Experince.message}
+                  {errors.experience && errors.experience.message}
                 </p>
               </Form.Group>
             </Col>
@@ -132,14 +132,14 @@ const InterviewResultForm = () => {
                 <Form.Label>Round</Form.Label>
                 <Form.Select
                   required
-                  {...register("Round", { required: "requierd" })}
+                  {...register("rounds", { required: "requierd" })}
                 >
-                  <option value="">Round Type...</option>
+                  <option value="">round Type...</option>
                   <option value="practical">practical</option>
                   <option value="Technical">Technical</option>
                 </Form.Select>
                 <p className="text-danger">
-                  {errors.Round && errors.Round.message}
+                  {errors.rounds && errors.rounds.message}
                 </p>
               </Form.Group>
             </Col>
@@ -148,15 +148,15 @@ const InterviewResultForm = () => {
                 <Form.Label>Communication</Form.Label>
                 <Form.Select
                   required
-                  {...register("Communication", { required: "requierd" })}
+                  {...register("communication", { required: "requierd" })}
                 >
-                  <option value="">Communication Skill..</option>
+                  <option value="">communication Skill..</option>
                   <option value="Expert">Expert</option>
                   <option value="Good">Good</option>
                   <option value="Poor">Poor</option>
                 </Form.Select>
                 <p className="text-danger">
-                  {errors.Communication && errors.Communication.message}
+                  {errors.communication && errors.communication.message}
                 </p>
               </Form.Group>
             </Col>
@@ -169,7 +169,7 @@ const InterviewResultForm = () => {
                 <Form.Control
                   type="number"
                   placeholder="Practical Completion"
-                  {...register("Practical", {
+                  {...register("practicalCompletion", {
                     required: "requierd",
                     min: {
                       value: 1,
@@ -182,7 +182,8 @@ const InterviewResultForm = () => {
                   })}
                 />
                 <p className="text-danger">
-                  {errors.Practical && errors.Practical.message}
+                  {errors.practicalCompletion &&
+                    errors.practicalCompletion.message}
                 </p>
               </Form.Group>
             </Col>
@@ -192,7 +193,7 @@ const InterviewResultForm = () => {
                 <Form.Control
                   type="number"
                   placeholder="Coding"
-                  {...register("Coding", {
+                  {...register("codingStandard", {
                     required: "requierd",
                     min: {
                       value: 1,
@@ -205,7 +206,7 @@ const InterviewResultForm = () => {
                   })}
                 />
                 <p className="text-danger">
-                  {errors.Coding && errors.Coding.message}
+                  {errors.codingStandard && errors.codingStandard.message}
                 </p>
               </Form.Group>
             </Col>
@@ -217,7 +218,7 @@ const InterviewResultForm = () => {
                 <Form.Control
                   type="number"
                   placeholder="Technical Round"
-                  {...register("Technical", {
+                  {...register("technicalRound", {
                     required: "requierd",
                     min: {
                       value: 1,
@@ -230,7 +231,7 @@ const InterviewResultForm = () => {
                   })}
                 />
                 <p className="text-danger">
-                  {errors.Technical && errors.Technical.message}
+                  {errors.technicalRound && errors.technicalRound.message}
                 </p>
               </Form.Group>
             </Col>
@@ -242,12 +243,12 @@ const InterviewResultForm = () => {
                 <Form.Control
                   type="Text"
                   placeholder="Your Answer"
-                  {...register("Note", {
+                  {...register("notes", {
                     required: "requierd",
                   })}
                 />
                 <p className="text-danger">
-                  {errors.Note && errors.Note.message}
+                  {errors.notes && errors.notes.message}
                 </p>
               </Form.Group>
             </Col>
