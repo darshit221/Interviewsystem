@@ -14,17 +14,23 @@ import {
 import { useForm } from "react-hook-form";
 import { routes } from "../../routes";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import actions from "../../redux/InterviewResult/action";
 
 const InterviewResultForm = () => {
-  const [birthday, setBirthday] = useState("");
+  const [Day, setDay] = useState(new Date());
   const history = useHistory();
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
 
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    console.log(data);
+    dispatch(actions.createInterviewResult(data));
+  };
   return (
     <Card border="light" className="bg-white shadow-sm mb-4">
       <Card.Body>
@@ -35,7 +41,7 @@ const InterviewResultForm = () => {
 
             <Datetime
               timeFormat={false}
-              onChange={setBirthday}
+              onChange={setDay}
               renderInput={(props, openCalendar) => (
                 <InputGroup>
                   <InputGroup.Text>
@@ -44,9 +50,7 @@ const InterviewResultForm = () => {
                   <Form.Control
                     type="text"
                     {...register("Date", { required: "requierd" })}
-                    value={
-                      birthday ? moment(birthday).format("MM/DD/YYYY") : ""
-                    }
+                    value={Day ? moment(Day).format("MM/DD/YYYY") : ""}
                     placeholder="mm/dd/yyyy"
                     onFocus={openCalendar}
                   />
@@ -71,18 +75,18 @@ const InterviewResultForm = () => {
             </Col>
             <Col md={6} className="mb-3">
               <Form.Group className="mb-3">
-                <Form.Label>InterviewResult</Form.Label>
+                <Form.Label>Interviewer</Form.Label>
                 <Form.Select
-                  {...register("InterviewResult", { required: "requierd" })}
+                  {...register("interviewer", { required: "requierd" })}
                 >
-                  <option value=""></option>
+                  <option value="">Interviewer...</option>
                   <option value="Dhaval">Dhaval</option>
                   <option value="Ridhi">Ridhi</option>
                   <option value="Renish">Renish</option>
                   <option value="Malay">Malay</option>
                 </Form.Select>
                 <p className="text-danger">
-                  {errors.InterviewResult && errors.InterviewResult.message}
+                  {errors.interviewer && errors.interviewer.message}
                 </p>
               </Form.Group>
             </Col>
@@ -96,7 +100,7 @@ const InterviewResultForm = () => {
                   required
                   {...register("Technologies", { required: "requierd" })}
                 >
-                  <option value=""></option>
+                  <option value="">Technologies...</option>
                   <option value="React">React</option>
                   <option value="Angular">Angular</option>
                   <option value="Vue">Vue</option>
@@ -111,7 +115,7 @@ const InterviewResultForm = () => {
               <Form.Group className="mb-3">
                 <Form.Label>Experince</Form.Label>
                 <Form.Control
-                  type="text"
+                  type="number"
                   placeholder="Experince"
                   {...register("Experince", { required: "requierd" })}
                 />
@@ -130,7 +134,7 @@ const InterviewResultForm = () => {
                   required
                   {...register("Round", { required: "requierd" })}
                 >
-                  <option value=""></option>
+                  <option value="">Round Type...</option>
                   <option value="practical">practical</option>
                   <option value="Technical">Technical</option>
                 </Form.Select>
@@ -146,7 +150,7 @@ const InterviewResultForm = () => {
                   required
                   {...register("Communication", { required: "requierd" })}
                 >
-                  <option value=""></option>
+                  <option value="">Communication Skill..</option>
                   <option value="Expert">Expert</option>
                   <option value="Good">Good</option>
                   <option value="Poor">Poor</option>

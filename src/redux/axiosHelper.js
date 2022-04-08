@@ -16,22 +16,12 @@ const getHeaders = () => {
     },
   };
   if (authToken) {
-    config.headers.authorization = authToken;
+    config.headers.authorization = `barrer ${authToken}`;
   }
 
   return config;
 };
 
-/**
- * Get call from Axios
- */
-const axiosGet = async (url) => {
-  try {
-    return await axios.get(`${BASE_URL}/${url}`, getHeaders());
-  } catch (error) {
-    throw error.response.data;
-  }
-};
 /**
  * Post request from axios
  */
@@ -40,6 +30,17 @@ const axiosPost = async (data, url) => {
     let request = await axios.post(`${BASE_URL}/${url}`, data, getHeaders());
 
     return request;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+/**
+ * Get call from Axios
+ */
+const axiosGet = async (url) => {
+  try {
+    return await axios.get(`${BASE_URL}/${url}`, getHeaders());
   } catch (error) {
     throw error.response.data;
   }
