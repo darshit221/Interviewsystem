@@ -27,15 +27,16 @@ export default () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(actions.getInterviewResult());
+    dispatch(actions.getInterviewResultRequest());
   }, []);
 
   const { interviewerList } = useSelector((state) => state.interviewResult);
   console.log(interviewerList);
 
   const interviewResultDeleteHandler = (_id) => {
-    dispatch(actions.deleteInterviewResult(_id));
+    dispatch(actions.deleteInterviewResultRequest(_id));
   };
+
   return (
     <>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
@@ -76,7 +77,7 @@ export default () => {
                       <span className="fw-normal">{rounds}</span>
                     </td>
                     <td>
-                      <Button>
+                      <Button as={Link} to={routes.InterviewResultForm.path}>
                         Edit <FontAwesomeIcon icon={faEdit} className="me-2" />
                       </Button>
                       <Button onClick={() => interviewResultDeleteHandler(_id)}>

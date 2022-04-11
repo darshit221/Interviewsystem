@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import moment from "moment-timezone";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
+
 import {
   Col,
   Row,
@@ -10,25 +11,37 @@ import {
   Button,
   InputGroup,
 } from "@themesberg/react-bootstrap";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import DatePicker from "react-date-picker";
 import { routes } from "../../routes";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import actions from "../../redux/Role/action";
+import { TextField } from "@mui/material";
 
 const UserForm = () => {
-  const [dob, onChange] = useState(new Date());
   const history = useHistory();
   const dispatch = useDispatch();
 
+  let intialvalue = {
+    comfirmpassword: "",
+    dob: new Date(),
+    email: "",
+    file: { FileList: {} },
+    firstname: "",
+    lastname: "",
+    password: "@123",
+    role: "",
+  };
   const {
     register,
     handleSubmit,
     watch,
-    reset,
+    control,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: intialvalue,
+  });
   const password = useRef({});
   password.current = watch("password", "");
 
@@ -38,7 +51,7 @@ const UserForm = () => {
 
   const roles = useSelector((state) => state.role.role);
 
-  const onSubmit = (data) => reset(data);
+  const onSubmit = (data) => console.log(data);
   return (
     <Card border="light" className="bg-white shadow-sm mb-4">
       <Card.Body>
@@ -49,7 +62,8 @@ const UserForm = () => {
               <Form.Label>Select your Role</Form.Label>
               <Form.Select {...register("role", { required: "requierd" })}>
                 <option value="">Role...</option>
-
+                <option value="HR">HR</option>
+                <option value="Interviwer">Interviwer</option>
                 {roles.map((role) => {
                   return (
                     <React.Fragment key={role.id}>
@@ -63,12 +77,14 @@ const UserForm = () => {
               </p>
             </Form.Group>
             <Col md={6} className="mb-3">
-              <Form.Group>
-                <Form.Label>First Name</Form.Label>
-                <Form.Control
-                  {...register("firstname", { required: "requierd" })}
+              <Form.Group className="mb-3">
+                <TextField
+                  fullWidth
+                  label="first name"
+                  variant="standard"
                   type="text"
-                  placeholder="Enter your first name"
+                  {...register("firstname", { required: "requierd" })}
+                  error={Boolean(errors.firstname)}
                 />
                 <p className="text-danger">
                   {errors.firstname && errors.firstname.message}
@@ -76,12 +92,14 @@ const UserForm = () => {
               </Form.Group>
             </Col>
             <Col md={6} className="mb-3">
-              <Form.Group>
-                <Form.Label>Last Name</Form.Label>
-                <Form.Control
-                  {...register("lastname", { required: "requierd" })}
+              <Form.Group className="mb-3">
+                <TextField
+                  fullWidth
+                  label="last name"
+                  variant="standard"
                   type="text"
-                  placeholder="Enter your last name"
+                  {...register("lastname", { required: "requierd" })}
+                  error={Boolean(errors.lastname)}
                 />
                 <p className="text-danger">
                   {errors.lastname && errors.lastname.message}
@@ -91,32 +109,41 @@ const UserForm = () => {
           </Row>
           <Row className="align-items-center">
             <Col md={6} className="mb-3">
-              <Form.Group>
-                <Form.Label>Birthday</Form.Label>
-                <InputGroup>
-                  <InputGroup.Text>
-                    <FontAwesomeIcon icon={faCalendarAlt} />
-                  </InputGroup.Text>
-                  <DatePicker
-                    className="form-control"
-                    onChange={onChange}
-                    value={dob}
-                    minDate={moment().subtract(150, "years")._d}
-                    maxDate={moment().subtract(18, "years")._d}
-                  />
-                </InputGroup>
+              <Form.Group md="4" className="mb-3">
+                <Form.Label>Date</Form.Label>
+
+                <Controller
+                  control={control}
+                  name="dob"
+                  render={({ field }) => (
+                    <InputGroup>
+                      <InputGroup.Text>
+                        <FontAwesomeIcon icon={faCalendarAlt} />
+                      </InputGroup.Text>
+                      <DatePicker
+                        className="form-control"
+                        onChange={(e) => field.onChange(e)}
+                        value={field.value}
+                        dateFormat="d MMM yyyy"
+                        minDate={moment().subtract(150, "years")._d}
+                        maxDate={moment().subtract(18, "years")._d}
+                      />
+                    </InputGroup>
+                  )}
+                />
                 <p className="text-danger">
-                  {errors.dob && errors.dob.message}
+                  {errors.date && errors.date.message}
                 </p>
               </Form.Group>
             </Col>
             <Col md={6} className="mb-3">
               <Form.Group>
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                  required
+                <TextField
                   type="email"
-                  placeholder="name@company.com"
+                  label="name@company.com"
+                  fullWidth
+                  variant="standard"
+                  error={Boolean(errors.email)}
                   {...register("email", {
                     required: "requierd",
                     pattern: {
@@ -135,11 +162,12 @@ const UserForm = () => {
             <Col md={6} className="mb-3">
               <Form.Group>
                 <Form.Label>Password</Form.Label>
-                <Form.Control
-                  required
+                <TextField
                   type="password"
-                  placeholder="Password"
-                  name="password"
+                  label="password"
+                  fullWidth
+                  variant="standard"
+                  error={Boolean(errors.email)}
                   {...register("password", {
                     required: "You must specify a password",
                     pattern: {
@@ -166,9 +194,12 @@ const UserForm = () => {
             <Col md={6} className="mb-3">
               <Form.Group>
                 <Form.Label>Comfirm Password</Form.Label>
-                <Form.Control
+                <TextField
                   type="password"
-                  placeholder="Comfirm Password"
+                  fullWidth
+                  variant="standard"
+                  label="Comfirm Password"
+                  error={Boolean(errors.comfirmpassword)}
                   {...register("comfirmpassword", {
                     validate: (value) =>
                       value === password.current ||
@@ -181,12 +212,15 @@ const UserForm = () => {
               </Form.Group>
             </Col>
             <Form.Group>
-              <Form.Label>First Name</Form.Label>
-              <Form.Control
-                {...register("file", { required: "requierd" })}
+              <TextField
                 type="file"
+                label="profile picture"
+                fullWidth
                 multiple
+                variant="standard"
+                {...register("file", { required: "requierd" })}
                 placeholder="Enter your first name"
+                error={Boolean(errors.file)}
               />
               <p className="text-danger">
                 {errors.file && errors.file.message}

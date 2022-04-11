@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import moment from "moment-timezone";
 import Datetime from "react-datetime";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,23 +13,51 @@ import {
 } from "@themesberg/react-bootstrap";
 import { useForm } from "react-hook-form";
 import { routes } from "../../routes";
-import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import actions from "../../redux/InterviewResult/action";
+import { InputLabel, MenuItem, Select, TextField } from "@mui/material";
+let intialvalue = {
+  date: "",
+  name: "",
+  interviewer: [],
+  technology: [],
+  experience: "",
+  rounds: "",
+  communication: "",
+  practicalCompletion: "",
+  codingStandard: "",
+  technicalRound: "",
+  notes: "",
+};
 
 const InterviewResultForm = () => {
-  const [Day, setDay] = useState(new Date());
   const history = useHistory();
   const dispatch = useDispatch();
+  const id = useParams();
+  const { interview } = useSelector((state) => state.interviewResult);
+  console.log("update data", id);
+
+  useEffect(() => {
+    dispatch(actions.getSingleInterviewResultRequest(id));
+  }, [dispatch, id]);
+  useEffect(() => {
+    if (interview) {
+      intialvalue = interview;
+    }
+  }, []);
+
   const {
     register,
     handleSubmit,
 
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: intialvalue,
+  });
   const onSubmit = (data) => {
     console.log(data);
-    dispatch(actions.createInterviewResult(data));
+    dispatch(actions.createInterviewResultRequest(data));
   };
   return (
     <Card border="light" className="bg-white shadow-sm mb-4">
@@ -37,36 +65,30 @@ const InterviewResultForm = () => {
         <h5 className="mb-4">General information</h5>
         <Form noValidate onSubmit={handleSubmit(onSubmit)}>
           <Form.Group md="4" className="mb-3">
-            <Form.Label>Date</Form.Label>
-
-            <Datetime
-              timeFormat={false}
-              onChange={setDay}
-              renderInput={(props, openCalendar) => (
-                <InputGroup>
-                  <InputGroup.Text>
-                    <FontAwesomeIcon icon={faCalendarAlt} />
-                  </InputGroup.Text>
-                  <Form.Control
-                    type="text"
-                    {...register("date", { required: "requierd" })}
-                    value={Day ? moment(Day).format("MM/DD/YYYY") : ""}
-                    placeholder="mm/dd/yyyy"
-                    onFocus={openCalendar}
-                  />
-                </InputGroup>
-              )}
+            <TextField
+              fullWidth
+              id="standard-basic"
+              label=" Date"
+              type="date"
+              variant="standard"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              {...register("date", { required: "requierd" })}
+              error={Boolean(errors.date)}
             />
             <p className="text-danger">{errors.date && errors.date.message}</p>
           </Form.Group>
           <Row>
             <Col md={6} className="mb-3">
               <Form.Group className="mb-3">
-                <Form.Label>Name</Form.Label>
-                <Form.Control
+                <TextField
+                  fullWidth
+                  label="name"
+                  variant="standard"
                   type="text"
-                  placeholder="Name"
                   {...register("name", { required: "requierd" })}
+                  error={Boolean(errors.name)}
                 />
                 <p className="text-danger">
                   {errors.name && errors.name.message}
@@ -74,50 +96,23 @@ const InterviewResultForm = () => {
               </Form.Group>
             </Col>
             <Col md={6} className="mb-3">
-              <Form.Group className="mb-3">
-                <Form.Label>Interviewer</Form.Label>
-                <Form.Select
-                  {...register("interviewer", { required: "requierd" })}
-                >
-                  <option value="">Interviewer...</option>
-                  <option value="Dhaval">Dhaval</option>
-                  <option value="Ridhi">Ridhi</option>
-                  <option value="Renish">Renish</option>
-                  <option value="Malay">Malay</option>
-                </Form.Select>
-                <p className="text-danger">
-                  {errors.interviewer && errors.interviewer.message}
-                </p>
-              </Form.Group>
+              <Form.Group className="mb-3">multiselect</Form.Group>
             </Col>
           </Row>
 
           <Row>
             <Col md={6} className="mb-3">
-              <Form.Group className="mb-3">
-                <Form.Label>Technologies</Form.Label>
-                <Form.Select
-                  required
-                  {...register("technology", { required: "requierd" })}
-                >
-                  <option value="">Technologies...</option>
-                  <option value="React">React</option>
-                  <option value="Angular">Angular</option>
-                  <option value="Vue">Vue</option>
-                  <option value="Node">Node</option>
-                </Form.Select>
-                <p className="text-danger">
-                  {errors.technology && errors.technology.message}
-                </p>
-              </Form.Group>
+              <Form.Group className="mb-3">multiselect</Form.Group>
             </Col>
             <Col md={6} className="mb-3">
               <Form.Group className="mb-3">
-                <Form.Label>Experince</Form.Label>
-                <Form.Control
+                <TextField
+                  fullWidth
+                  label="Experience"
+                  variant="standard"
                   type="number"
-                  placeholder="Experince"
                   {...register("experience", { required: "requierd" })}
+                  error={Boolean(errors.experience)}
                 />
                 <p className="text-danger">
                   {errors.experience && errors.experience.message}
@@ -129,15 +124,20 @@ const InterviewResultForm = () => {
           <Row>
             <Col md={6} className="mb-3">
               <Form.Group className="mb-3">
-                <Form.Label>Round</Form.Label>
-                <Form.Select
-                  required
+                <InputLabel id="demo-simple-select-standard-label">
+                  Round
+                </InputLabel>
+
+                <Select
+                  label="Round"
+                  variant="standard"
+                  fullWidth
                   {...register("rounds", { required: "requierd" })}
+                  error={Boolean(errors.rounds)}
                 >
-                  <option value="">round Type...</option>
-                  <option value="practical">practical</option>
-                  <option value="Technical">Technical</option>
-                </Form.Select>
+                  <MenuItem value={"practical"}>practical</MenuItem>
+                  <MenuItem value={"Technical"}>Technical</MenuItem>
+                </Select>
                 <p className="text-danger">
                   {errors.rounds && errors.rounds.message}
                 </p>
@@ -145,16 +145,18 @@ const InterviewResultForm = () => {
             </Col>
             <Col md={6} className="mb-3">
               <Form.Group className="mb-3">
-                <Form.Label>Communication</Form.Label>
-                <Form.Select
-                  required
+                <InputLabel>Communication</InputLabel>
+                <Select
+                  fullWidth
+                  label="communication"
+                  variant="standard"
                   {...register("communication", { required: "requierd" })}
+                  error={Boolean(errors.communication)}
                 >
-                  <option value="">communication Skill..</option>
-                  <option value="Expert">Expert</option>
-                  <option value="Good">Good</option>
-                  <option value="Poor">Poor</option>
-                </Form.Select>
+                  <MenuItem value={"Expert"}>Expert</MenuItem>
+                  <MenuItem value={"Good"}>Good</MenuItem>
+                  <MenuItem value={"Poor"}>Poor</MenuItem>
+                </Select>
                 <p className="text-danger">
                   {errors.communication && errors.communication.message}
                 </p>
@@ -165,10 +167,11 @@ const InterviewResultForm = () => {
           <Row>
             <Col md={6} className="mb-3">
               <Form.Group className="mb-3">
-                <Form.Label>Practical Completion (1-100%)</Form.Label>
-                <Form.Control
+                <TextField
+                  fullWidth
+                  label="Practical Completion"
+                  variant="standard"
                   type="number"
-                  placeholder="Practical Completion"
                   {...register("practicalCompletion", {
                     required: "requierd",
                     min: {
@@ -180,7 +183,10 @@ const InterviewResultForm = () => {
                       message: "enter only 1 to 100",
                     },
                   })}
+                  {...register("practicalCompletion", { required: "requierd" })}
+                  error={Boolean(errors.practicalCompletion)}
                 />
+
                 <p className="text-danger">
                   {errors.practicalCompletion &&
                     errors.practicalCompletion.message}
@@ -189,10 +195,11 @@ const InterviewResultForm = () => {
             </Col>
             <Col md={6} className="mb-3">
               <Form.Group className="mb-3">
-                <Form.Label>Coding Standard (1-100%)</Form.Label>
-                <Form.Control
+                <TextField
+                  fullWidth
+                  label="Coding Standard"
+                  variant="standard"
                   type="number"
-                  placeholder="Coding"
                   {...register("codingStandard", {
                     required: "requierd",
                     min: {
@@ -204,7 +211,10 @@ const InterviewResultForm = () => {
                       message: "enter only 1 to 100",
                     },
                   })}
+                  {...register("codingStandard", { required: "requierd" })}
+                  error={Boolean(errors.codingStandard)}
                 />
+
                 <p className="text-danger">
                   {errors.codingStandard && errors.codingStandard.message}
                 </p>
@@ -214,10 +224,11 @@ const InterviewResultForm = () => {
           <Row>
             <Col md={6} className="mb-3">
               <Form.Group className="mb-3">
-                <Form.Label>Technical Round (1-100%)</Form.Label>
-                <Form.Control
+                <TextField
+                  fullWidth
+                  label="Technical Round"
+                  variant="standard"
                   type="number"
-                  placeholder="Technical Round"
                   {...register("technicalRound", {
                     required: "requierd",
                     min: {
@@ -229,7 +240,10 @@ const InterviewResultForm = () => {
                       message: "enter only 1 to 100",
                     },
                   })}
+                  {...register("technicalRound", { required: "requierd" })}
+                  error={Boolean(errors.technicalRound)}
                 />
+
                 <p className="text-danger">
                   {errors.technicalRound && errors.technicalRound.message}
                 </p>
@@ -237,15 +251,15 @@ const InterviewResultForm = () => {
             </Col>
             <Col md={6} className="mb-3">
               <Form.Group className="mb-3">
-                <Form.Label>
-                  Note (Please Add Done And Not Done Points)
-                </Form.Label>
-                <Form.Control
+                <TextField
                   type="Text"
-                  placeholder="Your Answer"
+                  fullWidth
+                  variant="standard"
+                  label="Your Answer"
                   {...register("notes", {
                     required: "requierd",
                   })}
+                  error={Boolean(errors.notes)}
                 />
                 <p className="text-danger">
                   {errors.notes && errors.notes.message}

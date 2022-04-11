@@ -19,7 +19,7 @@ const actions = {
   DELETE_INTERVIEW_RESULT_SUCCESS: "DELETE_INTERVIEW_RESULT_SUCCESS",
   DELETE_INTERVIEW_RESULT_ERROR: "DELETE_INTERVIEW_RESULT_ERROR",
 
-  createInterviewResult: (interviewData) => ({
+  createInterviewResultRequest: (interviewData) => ({
     type: actions.CREATE_INTERVIEW_RESULT_REQUEST,
     interviewData,
   }),
@@ -35,7 +35,7 @@ const actions = {
     errors,
   }),
 
-  getInterviewResult: () => ({
+  getInterviewResultRequest: () => ({
     type: actions.GET_INTERVIEW_RESULT_REQUEST,
   }),
 
@@ -50,7 +50,22 @@ const actions = {
     errors,
   }),
 
-  deleteInterviewResult: (userID) => ({
+  getSingleInterviewResultRequest: (userID) => ({
+    type: actions.GET_SINGLE_INTERVIEW_RESULT_REQUEST,
+    userID,
+  }),
+
+  getSingleInterviewResultSuccess: (payload = {}) => ({
+    type: actions.GET_SINGLE_INTERVIEW_RESULT_SUCCESS,
+    payload,
+  }),
+
+  geSingletInterviewResultFailure: (payload) => ({
+    type: actions.GET_SINGLE_INTERVIEW_RESULT_ERROR,
+    payload,
+  }),
+
+  deleteInterviewResultRequest: (userID) => ({
     type: actions.DELETE_INTERVIEW_RESULT_REQUEST,
     userID,
   }),
