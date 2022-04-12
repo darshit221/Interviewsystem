@@ -56,13 +56,15 @@ export default (state = initState, action) => {
         loading: true,
         action: action.type,
       };
-    case actions.GET_SINGLE_USER_SUCCESS:
+    case actions.GET_SINGLE_USER_SUCCESS: {
+      console.log("action.payload", action.payload);
       return {
         ...state,
-        loading: false,
         user: action.payload,
+        loading: false,
         action: action.type,
       };
+    }
 
     case actions.GET_SINGLE_USER_ERROR:
       return {
@@ -87,6 +89,25 @@ export default (state = initState, action) => {
         ...state,
         loading: false,
       };
+    case actions.UPDATE_USER_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        action: action.type,
+      };
+    case actions.UPDATE_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        action: action.type,
+      };
+    case actions.UPDATE_USER_ERROR:
+      return {
+        ...state,
+        loading: false,
+        action: action.type,
+      };
+
     default:
       return state;
   }

@@ -1,23 +1,16 @@
 import React, { useEffect } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faEdit,
-  faEllipsisH,
-  faPlus,
-  faTrashAlt,
-} from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faPlus, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import {
   Nav,
   Card,
   Button,
   Table,
-  Dropdown,
   Pagination,
-  ButtonGroup,
 } from "@themesberg/react-bootstrap";
 import { Link } from "react-router-dom";
-
+import { confirm } from "react-confirm-box";
 import { routes } from "../../routes";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -28,13 +21,17 @@ export default () => {
 
   useEffect(() => {
     dispatch(actions.getInterviewResultRequest());
-  }, []);
+  }, [dispatch]);
 
   const { interviewerList } = useSelector((state) => state.interviewResult);
-  console.log(interviewerList);
 
-  const interviewResultDeleteHandler = (_id) => {
-    dispatch(actions.deleteInterviewResultRequest(_id));
+  const interviewResultDeleteHandler = async (_id) => {
+    const result = await confirm("Are you sure?");
+    if (result) {
+      dispatch(actions.deleteInterviewResultRequest(_id));
+      return;
+    }
+    console.log("You click No!");
   };
 
   return (
@@ -44,7 +41,7 @@ export default () => {
           as={Link}
           variant="secondary"
           size="xm"
-          to={routes.InterviewResultForm.path}
+          to={routes.AddInterviewResultForm.path}
           className="text-dark"
         >
           <FontAwesomeIcon icon={faPlus} className="me-2" />
@@ -77,12 +74,23 @@ export default () => {
                       <span className="fw-normal">{rounds}</span>
                     </td>
                     <td>
-                      <Button as={Link} to={routes.InterviewResultForm.path}>
-                        Edit <FontAwesomeIcon icon={faEdit} className="me-2" />
+                      <Button
+                        size="sm"
+                        variant="light"
+                        className="me-3 text-info"
+                        as={Link}
+                        to={`/interviewresult/edit/interviewresultform/${_id}`}
+                      >
+                        <FontAwesomeIcon icon={faEdit} />
                       </Button>
-                      <Button onClick={() => interviewResultDeleteHandler(_id)}>
-                        Remove
-                        <FontAwesomeIcon icon={faTrashAlt} className="me-2" />
+
+                      <Button
+                        size="sm"
+                        variant="light"
+                        className="me-3 text-danger"
+                        onClick={() => interviewResultDeleteHandler(_id)}
+                      >
+                        <FontAwesomeIcon icon={faTrashAlt} />
                       </Button>
                     </td>
                   </tr>

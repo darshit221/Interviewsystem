@@ -1,64 +1,123 @@
 import React, { useEffect, useState } from "react";
-import moment from "moment-timezone";
-import Datetime from "react-datetime";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
-import {
-  Col,
-  Row,
-  Card,
-  Form,
-  Button,
-  InputGroup,
-} from "@themesberg/react-bootstrap";
+
+import { Col, Row, Card, Form, Button } from "@themesberg/react-bootstrap";
 import { useForm } from "react-hook-form";
 import { routes } from "../../routes";
-import { useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import actions from "../../redux/InterviewResult/action";
-import { InputLabel, MenuItem, Select, TextField } from "@mui/material";
-let intialvalue = {
-  date: "",
-  name: "",
-  interviewer: [],
-  technology: [],
-  experience: "",
-  rounds: "",
-  communication: "",
-  practicalCompletion: "",
-  codingStandard: "",
-  technicalRound: "",
-  notes: "",
+import {
+  Box,
+  Chip,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  TextField,
+} from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
 };
 
-const InterviewResultForm = () => {
-  const history = useHistory();
+const skill = [
+  "javascript",
+  "java",
+  "React js",
+  "Angular js",
+  "Vue js",
+  "Node js",
+  "Express",
+  "Dgajango",
+];
+
+function getStyles(name, personName, theme) {
+  return {
+    fontWeight:
+      personName.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
+const InterviewResultForm = (props) => {
+  const { location } = useHistory();
+  const { _id } = useParams();
   const dispatch = useDispatch();
-  const id = useParams();
-  const { interview } = useSelector((state) => state.interviewResult);
-  console.log("update data", id);
+  const { interview, interviewer } = useSelector(
+    (state) => state.interviewResult
+  );
 
-  useEffect(() => {
-    dispatch(actions.getSingleInterviewResultRequest(id));
-  }, [dispatch, id]);
-  useEffect(() => {
-    if (interview) {
-      intialvalue = interview;
-    }
-  }, []);
+  const theme = useTheme();
+  const [personName, setPersonName] = useState([]);
 
+  const handleChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setPersonName(typeof value === "string" ? value.split(",") : value);
+    setValue("skills", value);
+  };
   const {
     register,
     handleSubmit,
 
+    setValue,
     formState: { errors },
-  } = useForm({
-    defaultValues: intialvalue,
-  });
+  } = useForm();
+
+  useEffect(() => {
+    location.pathname === `/interviewresult/edit/interviewresultform/${_id}` &&
+      dispatch(actions.getSingleInterviewResultRequest(_id));
+  }, [_id, dispatch, location.pathname]);
+
+  useEffect(() => {
+    if (
+      interview &&
+      location.pathname === `/interviewresult/edit/interviewresultform/${_id}`
+    ) {
+      setValue("date", interview.date);
+      setValue("name", interview.name);
+      setValue("interviewer", interview.rounds);
+      setValue("technology", interview.technology);
+      setValue("experience", interview.experience);
+      setValue("rounds", interview.rounds);
+      setValue("codingStandard", interview.codingStandard);
+      setValue("communication", interview.communication);
+      setValue("practicalCompletion", interview.practicalCompletion);
+      setValue("technicalRound", interview.technicalRound);
+      setValue("notes", interview.notes);
+    }
+  }, [_id, interview, location.pathname, setValue]);
+
   const onSubmit = (data) => {
     console.log(data);
-    dispatch(actions.createInterviewResultRequest(data));
+    if (location.pathname === "/interviewresult/add/interviewresultform") {
+      console.log("add");
+
+      dispatch(actions.createInterviewResultRequest(data));
+    }
+    if (
+      location.pathname === `/interviewresult/edit/interviewresultform/${_id}`
+    ) {
+      console.log("upadte");
+      dispatch(
+        actions.updateInterviewResultRequest({
+          interviewData: data,
+          interviewId: _id,
+        })
+      );
+    }
   };
+
   return (
     <Card border="light" className="bg-white shadow-sm mb-4">
       <Card.Body>
@@ -96,7 +155,43 @@ const InterviewResultForm = () => {
               </Form.Group>
             </Col>
             <Col md={6} className="mb-3">
-              <Form.Group className="mb-3">multiselect</Form.Group>
+              <Form.Group className="mb-3">
+                {/* <FormControl sx={{ m: 1, width: "100%" }}>
+                  <InputLabel id="demo-multiple-chip-label" variant="standard">
+                    Chip
+                  </InputLabel>
+                  <Select
+                    labelId="demo-multiple-chip-label"
+                    id="demo-multiple-chip"
+                    multiple
+                    label="Standard"
+                    variant="standard"
+                    value={personName}
+                    onChange={handleChange}
+                    input={
+                      <OutlinedInput id="select-multiple-chip" label="Chip" />
+                    }
+                    renderValue={(selected) => (
+                      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                        {selected.map((value) => (
+                          <Chip key={value} label={value} />
+                        ))}
+                      </Box>
+                    )}
+                    MenuProps={MenuProps}
+                  >
+                    {interviewer.map((name) => (
+                      <MenuItem
+                        key={name}
+                        value={name}
+                        style={getStyles(name, personName, theme)}
+                      >
+                        {name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl> */}
+              </Form.Group>
             </Col>
           </Row>
 
@@ -183,7 +278,9 @@ const InterviewResultForm = () => {
                       message: "enter only 1 to 100",
                     },
                   })}
-                  {...register("practicalCompletion", { required: "requierd" })}
+                  {...register("practicalCompletion", {
+                    required: "requierd",
+                  })}
                   error={Boolean(errors.practicalCompletion)}
                 />
 
@@ -275,8 +372,9 @@ const InterviewResultForm = () => {
             <Button
               className="mx-5"
               variant="primary"
-              type="submit"
-              onClick={() => history.push(routes.InterviewResult.path)}
+              type="reset"
+              as={Link}
+              to={routes.InterviewResult.path}
             >
               Back To HomePage
             </Button>

@@ -80,20 +80,28 @@ export const Routes = ({ history }) => {
         />
         <RestrictedRoute
           exact
-          path={routes.InterviewResultForm.path}
+          path={routes.AddInterviewResultForm.path}
           component={InterviewResultForm}
           isLoggedIn={isLoggedIn}
         />
         <RestrictedRoute
           exact
-          path={routes.Users.path}
-          component={Users}
+          path={routes.EditInterviewResultForm.path}
+          component={InterviewResultForm}
           isLoggedIn={isLoggedIn}
         />
+        {true && (
+          <RestrictedRoute
+            exact
+            path={routes.Users.path}
+            component={Users}
+            isLoggedIn={isLoggedIn}
+          />
+        )}
 
         <RestrictedRoute
           exact
-          path={routes.UserForm.path}
+          path={routes.AddUserForm.path}
           component={UserForm}
           isLoggedIn={isLoggedIn}
         />
@@ -110,8 +118,14 @@ export const routes = {
   Signin: { path: "/" },
   InterviewResult: { path: "/interviewresult" },
   Users: { path: "/users" },
-  InterviewResultForm: { path: "/interviewresult/interviewresultform" },
-  UserForm: { path: "/userform" },
+  AddInterviewResultForm: {
+    path: "/interviewresult/add/interviewresultform/:_id",
+  },
+  EditInterviewResultForm: {
+    path: "/interviewresult/edit/interviewresultform/:_id",
+  },
+  AddUserForm: { path: "/users/add/userform" },
+  EditUserForm: { path: "/users/edit/userform/:_id" },
   Billing: { path: "/examples/billing" },
   Invoice: { path: "/examples/invoice" },
   Signup: { path: "/examples/sign-up" },

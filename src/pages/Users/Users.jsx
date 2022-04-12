@@ -27,7 +27,7 @@ export default () => {
           as={Link}
           variant="secondary"
           size="xm"
-          to={routes.UserForm.path}
+          to={routes.AddUserForm.path}
           className="text-dark"
         >
           <FontAwesomeIcon icon={faPlus} className="me-2" />
@@ -74,33 +74,12 @@ export default () => {
                 </td>
 
                 <td>
-                  <Dropdown as={ButtonGroup}>
-                    <Dropdown.Toggle
-                      as={Button}
-                      split
-                      variant="link"
-                      className="text-dark m-0 p-0"
-                    >
-                      <span className="icon icon-sm">
-                        <FontAwesomeIcon
-                          icon={faEllipsisH}
-                          className="icon-dark"
-                        />
-                      </span>
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                      {/* <Dropdown.Item>
-                <FontAwesomeIcon icon={faEye} className="me-2" /> View Details
-              </Dropdown.Item> */}
-                      <Dropdown.Item>
-                        <FontAwesomeIcon icon={faEdit} className="me-2" /> Edit
-                      </Dropdown.Item>
-                      <Dropdown.Item className="text-danger">
-                        <FontAwesomeIcon icon={faTrashAlt} className="me-2" />{" "}
-                        Remove
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
+                  <span className="icon icon-sm me-2 text-info">
+                    <FontAwesomeIcon icon={faEdit} className="me-3" />
+                  </span>
+                  <span className="icon icon-sm text-danger">
+                    <FontAwesomeIcon icon={faTrashAlt} className="me-3" />
+                  </span>
                 </td>
               </tr>
             </tbody>

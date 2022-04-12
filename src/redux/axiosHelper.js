@@ -28,7 +28,9 @@ const getHeaders = () => {
 const axiosPost = async (data, url) => {
   try {
     let request = await axios.post(`${BASE_URL}/${url}`, data, getHeaders());
-
+    if (request.data && request.data.message) {
+      alert("Add sucessfully");
+    }
     return request;
   } catch (error) {
     throw error.response.data;
@@ -51,10 +53,23 @@ const axiosGet = async (url) => {
  */
 const axiosDelete = async (url) => {
   let request = await axios.delete(`${BASE_URL}/${url}`, getHeaders());
-  // if (request.data && request.data.message) {
-  //   await successMessage(request.data.message);
-  // }
+  if (request.data && request.data.message) {
+    alert("delete sucessfully");
+  }
   return request;
 };
 
-export { axiosGet, axiosPost, axiosDelete };
+const axiosPut = async (data, url) => {
+  try {
+    let request = await axios.put(`${BASE_URL}/${url}`, data, getHeaders());
+
+    if (request.data && request.data.message) {
+      alert("Update sucessfully");
+    }
+    return request;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+export { axiosGet, axiosPost, axiosDelete, axiosPut };

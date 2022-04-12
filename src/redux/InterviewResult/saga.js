@@ -1,6 +1,6 @@
 import { all, takeEvery, takeLatest, put } from "redux-saga/effects";
 import actions from "./action";
-import { axiosPost, axiosGet, axiosDelete } from "../axiosHelper";
+import { axiosPost, axiosGet, axiosDelete, axiosPut } from "../axiosHelper";
 import { push } from "connected-react-router";
 
 /**
@@ -9,9 +9,10 @@ import { push } from "connected-react-router";
 export function* createInterviewResult({ interviewData }) {
   try {
     const { data } = yield axiosPost(interviewData, `submitInterView`);
-    console.log(data);
+
     yield put(actions.createInterviewResultSuccess(data.data));
     yield put(push("/interviewresult"));
+    alert("add");
   } catch (error) {
     yield put(
       actions.createInterviewResultFailure(error.message, error.data || {})
@@ -32,10 +33,11 @@ export function* getInterviewResult() {
     );
   }
 }
-export function* getSingleInterviewResult({ userID }) {
-  console.log(userID);
+export function* getSingleInterviewResult({ interviewId }) {
+  console.log(interviewId);
   try {
-    const { data } = yield axiosGet(`getInterViewResultDetails/${userID}`);
+    const { data } = yield axiosGet(`getInterViewResultDetails/${interviewId}`);
+    console.log("data", data);
     yield put(actions.getSingleInterviewResultSuccess(data.data));
   } catch (error) {
     yield put(
@@ -44,18 +46,40 @@ export function* getSingleInterviewResult({ userID }) {
   }
 }
 
-export function* deleteInterviewResult({ userID }) {
-  const { data } = yield axiosDelete(`deleteInterViewResult/${userID}`);
+export function* deleteInterviewResult({ interviewId }) {
+  const { data } = yield axiosDelete(`deleteInterViewResult/${interviewId}`);
+  yield put(actions.getInterviewResultRequest());
+}
+
+export function* updateInterviewResult({ updatedData }) {
+  const { interviewData, interviewId } = updatedData;
+  console.log("dafdasfasdfasdf", interviewData, interviewId);
+
+  try {
+    const { data } = yield axiosPut(
+      interviewData,
+      `updateInterViewResult/${interviewId}`
+    );
+    console.log("reaponse......", data);
+    yield put(actions.updateInterviewResultSuccess(data.data));
+    yield put(actions.getInterviewResultRequest());
+    yield put(push("/interviewresult"));
+  } catch (error) {
+    yield put(
+      actions.updateInterviewResultFailure(error.message, error.data || {})
+    );
+  }
 }
 
 export default function* interviewSaga() {
   yield all([
     takeLatest(actions.CREATE_INTERVIEW_RESULT_REQUEST, createInterviewResult),
-    takeEvery(actions.GET_INTERVIEW_RESULT_REQUEST, getInterviewResult),
-    takeLatest(actions.DELETE_INTERVIEW_RESULT_REQUEST, deleteInterviewResult),
-    takeLatest(
+    takeEvery(
       actions.GET_SINGLE_INTERVIEW_RESULT_REQUEST,
       getSingleInterviewResult
     ),
+    takeEvery(actions.GET_INTERVIEW_RESULT_REQUEST, getInterviewResult),
+    takeEvery(actions.DELETE_INTERVIEW_RESULT_REQUEST, deleteInterviewResult),
+    takeLatest(actions.UPDATE_INTERVIEW_RESULT_REQUEST, updateInterviewResult),
   ]);
 }

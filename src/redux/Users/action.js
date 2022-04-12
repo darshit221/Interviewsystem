@@ -19,9 +19,9 @@ const actions = {
   DELETE_USER_SUCCESS: "DELETE_USER_SUCCESS",
   DELETE_USER_ERROR: "DELETE_USER_ERROR",
 
-  createUserRequest: (userData) => ({
+  createUserRequest: (interviewData) => ({
     type: actions.CREATE_USER_REQUEST,
-    userData,
+    interviewData,
   }),
 
   createUserSuccess: (payload = {}) => ({
@@ -50,9 +50,9 @@ const actions = {
     errors,
   }),
 
-  getSingleUserRequest: (userID) => ({
+  getSingleUserRequest: (userId) => ({
     type: actions.GET_SINGLE_USER_REQUEST,
-    userID,
+    userId,
   }),
 
   getSingleUserSuccess: (payload = {}) => ({
@@ -65,9 +65,9 @@ const actions = {
     payload,
   }),
 
-  deleteUserRequest: (userID) => ({
+  deleteUserRequest: (userId) => ({
     type: actions.DELETE_USER_REQUEST,
-    userID,
+    userId,
   }),
 
   deleteUserSuccess: (payload) => ({
@@ -78,6 +78,22 @@ const actions = {
   deleteUserFailure: (payload = "", errors = {}) => ({
     type: actions.DELETE_USER_ERROR,
     payload,
+  }),
+
+  updateUserRequest: (updatedData) => ({
+    type: actions.UPDATE_USER_REQUEST,
+    updatedData,
+  }),
+
+  updateUserSuccess: (payload = {}) => ({
+    type: actions.UPDATE_USER_SUCCESS,
+    payload,
+  }),
+
+  updateUserFailure: (payload = "", errors = {}) => ({
+    type: actions.UPDATE_USER_ERROR,
+    payload,
+    errors,
   }),
 };
 export default actions;

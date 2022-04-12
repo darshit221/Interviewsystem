@@ -50,9 +50,9 @@ const actions = {
     errors,
   }),
 
-  getSingleInterviewResultRequest: (userID) => ({
+  getSingleInterviewResultRequest: (interviewId) => ({
     type: actions.GET_SINGLE_INTERVIEW_RESULT_REQUEST,
-    userID,
+    interviewId,
   }),
 
   getSingleInterviewResultSuccess: (payload = {}) => ({
@@ -65,9 +65,9 @@ const actions = {
     payload,
   }),
 
-  deleteInterviewResultRequest: (userID) => ({
+  deleteInterviewResultRequest: (interviewId) => ({
     type: actions.DELETE_INTERVIEW_RESULT_REQUEST,
-    userID,
+    interviewId,
   }),
 
   deleteInterviewResultSuccess: (payload) => ({
@@ -78,6 +78,22 @@ const actions = {
   deleteInterviewResultFailure: (payload = "", errors = {}) => ({
     type: actions.DELETE_INTERVIEW_RESULT_ERROR,
     payload,
+  }),
+
+  updateInterviewResultRequest: (updatedData) => ({
+    type: actions.UPDATE_INTERVIEW_RESULT_REQUEST,
+    updatedData,
+  }),
+
+  updateInterviewResultSuccess: (payload = {}) => ({
+    type: actions.UPDATE_INTERVIEW_RESULT_SUCCESS,
+    payload,
+  }),
+
+  updateInterviewResultFailure: (payload = "", errors = {}) => ({
+    type: actions.UPDATE_INTERVIEW_RESULT_ERROR,
+    payload,
+    errors,
   }),
 };
 export default actions;

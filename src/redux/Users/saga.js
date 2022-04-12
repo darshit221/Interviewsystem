@@ -1,17 +1,18 @@
 import { all, takeEvery, takeLatest, put } from "redux-saga/effects";
 import actions from "./action";
-import { axiosPost, axiosGet, axiosDelete } from "../axiosHelper";
+import { axiosPost, axiosGet, axiosDelete, axiosPut } from "../axiosHelper";
 import { push } from "connected-react-router";
 
 /**
  * Request to create activity report.
  */
-export function* createUser({ userData }) {
+export function* createUser({ interviewData }) {
   try {
-    const { data } = yield axiosPost(userData, `submitInterView`);
+    const { data } = yield axiosPost(interviewData, `submitInterView`);
     console.log(data);
     yield put(actions.createUserSuccess(data.data));
     yield put(push("/interviewresult"));
+    alert("add");
   } catch (error) {
     yield put(actions.createUserFailure(error.message, error.data || {}));
   }
@@ -28,25 +29,46 @@ export function* getUser() {
     yield put(actions.getUserFailure(error.message, error.data || {}));
   }
 }
-export function* getSingleUser({ userID }) {
-  console.log(userID);
+export function* getSingleUser({ userId }) {
+  console.log(userId);
   try {
-    const { data } = yield axiosGet(`getInterViewResultDetails/${userID}`);
+    const { data } = yield axiosGet(`getInterViewResultDetails/${userId}`);
+    console.log("data", data);
     yield put(actions.getSingleUserSuccess(data.data));
   } catch (error) {
     yield put(actions.geSingletUserFailure(error.message, error.data || {}));
   }
 }
 
-export function* deleteUser({ userID }) {
-  const { data } = yield axiosDelete(`deleteInterViewResult/${userID}`);
+export function* deleteUser({ userId }) {
+  const { data } = yield axiosDelete(`deleteInterViewResult/${userId}`);
+  yield put(actions.getUserRequest());
+}
+
+export function* updateUser({ updatedData }) {
+  const { interviewData, userId } = updatedData;
+  console.log("dafdasfasdfasdf", interviewData, userId);
+
+  try {
+    const { data } = yield axiosPut(
+      interviewData,
+      `updateInterViewResult/${userId}`
+    );
+    console.log("reaponse......", data);
+    yield put(actions.updateUserSuccess(data.data));
+    yield put(actions.getUserRequest());
+    yield put(push("/interviewresult"));
+  } catch (error) {
+    yield put(actions.updateUserFailure(error.message, error.data || {}));
+  }
 }
 
 export default function* userSaga() {
   yield all([
     takeLatest(actions.CREATE_USER_REQUEST, createUser),
+    takeEvery(actions.GET_SINGLE_USER_REQUEST, getSingleUser),
     takeEvery(actions.GET_USER_REQUEST, getUser),
-    takeLatest(actions.DELETE_USER_REQUEST, deleteUser),
-    takeLatest(actions.GET_SINGLE_USER_REQUEST, getSingleUser),
+    takeEvery(actions.DELETE_USER_REQUEST, deleteUser),
+    takeLatest(actions.UPDATE_USER_REQUEST, updateUser),
   ]);
 }
