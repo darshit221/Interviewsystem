@@ -29,17 +29,6 @@ const MenuProps = {
   },
 };
 
-const skill = [
-  "javascript",
-  "java",
-  "React js",
-  "Angular js",
-  "Vue js",
-  "Node js",
-  "Express",
-  "Dgajango",
-];
-
 function getStyles(name, personName, theme) {
   return {
     fontWeight:
@@ -52,19 +41,21 @@ const InterviewResultForm = (props) => {
   const { location } = useHistory();
   const { _id } = useParams();
   const dispatch = useDispatch();
-  const { interview, interviewer } = useSelector(
+  const { interview, interviewer, technologies } = useSelector(
     (state) => state.interviewResult
   );
 
   const theme = useTheme();
   const [personName, setPersonName] = useState([]);
+  const [technology, setTechnology] = useState([]);
 
   const handleChange = (event) => {
     const {
       target: { value },
     } = event;
     setPersonName(typeof value === "string" ? value.split(",") : value);
-    setValue("skills", value);
+
+    setTechnology(typeof value === "string" ? value.split(",") : value);
   };
   const {
     register,
@@ -121,15 +112,15 @@ const InterviewResultForm = (props) => {
   return (
     <Card border="light" className="bg-white shadow-sm mb-4">
       <Card.Body>
-        <h5 className="mb-4">General information</h5>
+        <h5 className="mb-4">Interview Result </h5>
         <Form noValidate onSubmit={handleSubmit(onSubmit)}>
           <Form.Group md="4" className="mb-3">
             <TextField
               fullWidth
-              id="standard-basic"
+              id="outlined-basic"
               label=" Date"
               type="date"
-              variant="standard"
+              variant="outlined"
               InputLabelProps={{
                 shrink: true,
               }}
@@ -144,7 +135,7 @@ const InterviewResultForm = (props) => {
                 <TextField
                   fullWidth
                   label="name"
-                  variant="standard"
+                  variant="outlined"
                   type="text"
                   {...register("name", { required: "requierd" })}
                   error={Boolean(errors.name)}
@@ -156,55 +147,10 @@ const InterviewResultForm = (props) => {
             </Col>
             <Col md={6} className="mb-3">
               <Form.Group className="mb-3">
-                {/* <FormControl sx={{ m: 1, width: "100%" }}>
-                  <InputLabel id="demo-multiple-chip-label" variant="standard">
-                    Chip
-                  </InputLabel>
-                  <Select
-                    labelId="demo-multiple-chip-label"
-                    id="demo-multiple-chip"
-                    multiple
-                    label="Standard"
-                    variant="standard"
-                    value={personName}
-                    onChange={handleChange}
-                    input={
-                      <OutlinedInput id="select-multiple-chip" label="Chip" />
-                    }
-                    renderValue={(selected) => (
-                      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                        {selected.map((value) => (
-                          <Chip key={value} label={value} />
-                        ))}
-                      </Box>
-                    )}
-                    MenuProps={MenuProps}
-                  >
-                    {interviewer.map((name) => (
-                      <MenuItem
-                        key={name}
-                        value={name}
-                        style={getStyles(name, personName, theme)}
-                      >
-                        {name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl> */}
-              </Form.Group>
-            </Col>
-          </Row>
-
-          <Row>
-            <Col md={6} className="mb-3">
-              <Form.Group className="mb-3">multiselect</Form.Group>
-            </Col>
-            <Col md={6} className="mb-3">
-              <Form.Group className="mb-3">
                 <TextField
                   fullWidth
                   label="Experience"
-                  variant="standard"
+                  variant="outlined"
                   type="number"
                   {...register("experience", { required: "requierd" })}
                   error={Boolean(errors.experience)}
@@ -219,13 +165,104 @@ const InterviewResultForm = (props) => {
           <Row>
             <Col md={6} className="mb-3">
               <Form.Group className="mb-3">
-                <InputLabel id="demo-simple-select-standard-label">
+                <InputLabel id="demo-simple-select-outlined-label">
+                  Technology
+                </InputLabel>
+
+                <Select
+                  fullWidth
+                  labelId="demo-multiple-chip-label"
+                  id="demo-multiple-chip"
+                  multiple
+                  label="Technology"
+                  variant="outlined"
+                  {...register("tecnology", { required: "requierd" })}
+                  error={Boolean(errors.tecnology)}
+                  value={technology}
+                  onChange={handleChange}
+                  input={
+                    <OutlinedInput id="select-multiple-chip" label="Chip" />
+                  }
+                  renderValue={(selected) => (
+                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                      {selected.map((value) => (
+                        <Chip key={value} label={value} />
+                      ))}
+                    </Box>
+                  )}
+                  MenuProps={MenuProps}
+                >
+                  {technologies.map((name) => (
+                    <MenuItem
+                      key={name.id}
+                      value={name.technology}
+                      style={getStyles(name.id, technology, theme)}
+                    >
+                      {name.technology}
+                    </MenuItem>
+                  ))}
+                </Select>
+                <p className="text-danger">
+                  {errors.tecnology && errors.tecnology.message}
+                </p>
+              </Form.Group>
+            </Col>
+            <Col md={6} className="mb-3">
+              <Form.Group>
+                <InputLabel id="demo-simple-select-outlined-label">
+                  Interviewer
+                </InputLabel>
+
+                <Select
+                  fullWidth
+                  labelId="demo-multiple-chip-label"
+                  id="demo-multiple-chip"
+                  multiple
+                  label="interviewer"
+                  {...register("interviewer", { required: "requierd" })}
+                  error={Boolean(errors.interviewer)}
+                  variant="outlined"
+                  value={personName}
+                  onChange={handleChange}
+                  input={
+                    <OutlinedInput id="select-multiple-chip" label="Chip" />
+                  }
+                  renderValue={(selected) => (
+                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                      {selected.map((value) => (
+                        <Chip key={value} label={value} />
+                      ))}
+                    </Box>
+                  )}
+                  MenuProps={MenuProps}
+                >
+                  {interviewer.map((name) => (
+                    <MenuItem
+                      key={name.id}
+                      value={name.interviwer}
+                      style={getStyles(name.id, personName, theme)}
+                    >
+                      {name.interviwer}
+                    </MenuItem>
+                  ))}
+                </Select>
+                <p className="text-danger">
+                  {errors.interviewer && errors.interviewer.message}
+                </p>
+              </Form.Group>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col md={6} className="mb-3">
+              <Form.Group className="mb-3">
+                <InputLabel id="demo-simple-select-outlined-label">
                   Round
                 </InputLabel>
 
                 <Select
                   label="Round"
-                  variant="standard"
+                  variant="outlined"
                   fullWidth
                   {...register("rounds", { required: "requierd" })}
                   error={Boolean(errors.rounds)}
@@ -244,7 +281,7 @@ const InterviewResultForm = (props) => {
                 <Select
                   fullWidth
                   label="communication"
-                  variant="standard"
+                  variant="outlined"
                   {...register("communication", { required: "requierd" })}
                   error={Boolean(errors.communication)}
                 >
@@ -265,7 +302,7 @@ const InterviewResultForm = (props) => {
                 <TextField
                   fullWidth
                   label="Practical Completion"
-                  variant="standard"
+                  variant="outlined"
                   type="number"
                   {...register("practicalCompletion", {
                     required: "requierd",
@@ -295,7 +332,7 @@ const InterviewResultForm = (props) => {
                 <TextField
                   fullWidth
                   label="Coding Standard"
-                  variant="standard"
+                  variant="outlined"
                   type="number"
                   {...register("codingStandard", {
                     required: "requierd",
@@ -324,7 +361,7 @@ const InterviewResultForm = (props) => {
                 <TextField
                   fullWidth
                   label="Technical Round"
-                  variant="standard"
+                  variant="outlined"
                   type="number"
                   {...register("technicalRound", {
                     required: "requierd",
@@ -351,7 +388,7 @@ const InterviewResultForm = (props) => {
                 <TextField
                   type="Text"
                   fullWidth
-                  variant="standard"
+                  variant="outlined"
                   label="Your Answer"
                   {...register("notes", {
                     required: "requierd",

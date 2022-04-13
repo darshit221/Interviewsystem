@@ -177,7 +177,7 @@ export default (props = {}) => {
                 // icon={faChartPie}
               />
 
-              {true && <NavItem title="Users" link={routes.Users.path} />}
+              {true && <NavItem title="User" link={routes.User.path} />}
 
               <CollapsableNavItem
                 eventKey="examples/"

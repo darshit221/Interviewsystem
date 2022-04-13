@@ -4,7 +4,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 // pages
 
 import InterviewResult from "./pages/interviewresult/InterviewResult";
-import Users from "./pages/Users/Users";
+import User from "./pages/User/User";
 import Signin from "./pages/login/Signin";
 
 // components
@@ -12,7 +12,7 @@ import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
 import Preloader from "./components/Preloader";
 import InterviewResultForm from "./pages/interviewresult/InterviewResultForm";
-import UserForm from "./pages/Users/UserForm";
+import UserForm from "./pages/User/UserForm";
 import { useSelector } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 
@@ -93,8 +93,8 @@ export const Routes = ({ history }) => {
         {true && (
           <RestrictedRoute
             exact
-            path={routes.Users.path}
-            component={Users}
+            path={routes.User.path}
+            component={User}
             isLoggedIn={isLoggedIn}
           />
         )}
@@ -102,6 +102,12 @@ export const Routes = ({ history }) => {
         <RestrictedRoute
           exact
           path={routes.AddUserForm.path}
+          component={UserForm}
+          isLoggedIn={isLoggedIn}
+        />
+        <RestrictedRoute
+          exact
+          path={routes.EditUserForm.path}
           component={UserForm}
           isLoggedIn={isLoggedIn}
         />
@@ -117,15 +123,15 @@ export const routes = {
 
   Signin: { path: "/" },
   InterviewResult: { path: "/interviewresult" },
-  Users: { path: "/users" },
+  User: { path: "/user" },
   AddInterviewResultForm: {
-    path: "/interviewresult/add/interviewresultform/:_id",
+    path: "/interviewresult/add/interviewresultform",
   },
   EditInterviewResultForm: {
     path: "/interviewresult/edit/interviewresultform/:_id",
   },
-  AddUserForm: { path: "/users/add/userform" },
-  EditUserForm: { path: "/users/edit/userform/:_id" },
+  AddUserForm: { path: "/user/add/userform" },
+  EditUserForm: { path: "/user/edit/userform/:_id" },
   Billing: { path: "/examples/billing" },
   Invoice: { path: "/examples/invoice" },
   Signup: { path: "/examples/sign-up" },

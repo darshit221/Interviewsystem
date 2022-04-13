@@ -19,9 +19,9 @@ const actions = {
   DELETE_USER_SUCCESS: "DELETE_USER_SUCCESS",
   DELETE_USER_ERROR: "DELETE_USER_ERROR",
 
-  createUserRequest: (interviewData) => ({
+  createUserRequest: (userData) => ({
     type: actions.CREATE_USER_REQUEST,
-    interviewData,
+    userData,
   }),
 
   createUserSuccess: (payload = {}) => ({

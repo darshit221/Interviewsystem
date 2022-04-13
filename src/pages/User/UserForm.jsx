@@ -12,22 +12,58 @@ import {
   InputGroup,
 } from "@themesberg/react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
-import DatePicker from "react-date-picker";
+import DatePicker from "@mui/lab/DatePicker";
 import { routes } from "../../routes";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import actions from "../../redux/Role/action";
 import { TextField } from "@mui/material";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import { LocalizationProvider } from "@mui/lab";
 
+const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+const emailRegex =
+  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+const schema = yup.object().shape({
+  first_name: yup.string().required("required"),
+  last_name: yup.string().required("required"),
+  email: yup
+    .string()
+    .matches(emailRegex, "Must be a valid email!")
+    .required("required"),
+  dateOfBirth: yup
+    .string()
+    .nullable()
+    .test("dateOfBirth", "You must be 18 years or older", function (value) {
+      return moment().diff(moment(value, "MM-DD-YYYY"), "years") >= 18;
+    }),
+  password: yup
+    .string()
+    .matches(
+      passwordRegex,
+      "one lowercase, uppercase, number, special character required!"
+    )
+    .min(8, "Minimun 8 Character Required!")
+    .required("Please Enter Password!"),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password")], "Password must be same!")
+    .required("Required Field!"),
+  image: yup
+    .mixed()
+    .test("required", "photo is required", (value) => value.length > 0),
+});
 const UserForm = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
   let intialvalue = {
     comfirmpassword: "",
+    image: "",
     dob: new Date(),
     email: "",
-    file: { FileList: {} },
     firstname: "",
     lastname: "",
     password: "@123",
@@ -40,7 +76,7 @@ const UserForm = () => {
     control,
     formState: { errors },
   } = useForm({
-    defaultValues: intialvalue,
+    resolver: yupResolver(schema),
   });
   const password = useRef({});
   password.current = watch("password", "");
@@ -51,7 +87,9 @@ const UserForm = () => {
 
   const roles = useSelector((state) => state.role.role);
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    console.log(data);
+  };
   return (
     <Card border="light" className="bg-white shadow-sm mb-4">
       <Card.Body>
@@ -80,14 +118,14 @@ const UserForm = () => {
               <Form.Group className="mb-3">
                 <TextField
                   fullWidth
-                  label="first name"
+                  label="first_name"
                   variant="standard"
                   type="text"
-                  {...register("firstname", { required: "requierd" })}
-                  error={Boolean(errors.firstname)}
+                  {...register("first_name")}
+                  error={Boolean(errors.first_name)}
                 />
                 <p className="text-danger">
-                  {errors.firstname && errors.firstname.message}
+                  {errors.first_name && errors.first_name.message}
                 </p>
               </Form.Group>
             </Col>
@@ -95,44 +133,59 @@ const UserForm = () => {
               <Form.Group className="mb-3">
                 <TextField
                   fullWidth
-                  label="last name"
+                  label="last_name"
                   variant="standard"
                   type="text"
-                  {...register("lastname", { required: "requierd" })}
-                  error={Boolean(errors.lastname)}
+                  {...register("last_name")}
+                  error={Boolean(errors.last_name)}
                 />
                 <p className="text-danger">
-                  {errors.lastname && errors.lastname.message}
+                  {errors.last_name && errors.last_name.message}
                 </p>
               </Form.Group>
             </Col>
           </Row>
+
           <Row className="align-items-center">
             <Col md={6} className="mb-3">
               <Form.Group md="4" className="mb-3">
-                <Form.Label>Date</Form.Label>
-
-                <Controller
-                  control={control}
-                  name="dob"
-                  render={({ field }) => (
-                    <InputGroup>
-                      <InputGroup.Text>
-                        <FontAwesomeIcon icon={faCalendarAlt} />
-                      </InputGroup.Text>
+                <Form.Label>Date of Birth</Form.Label>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <Controller
+                    name="dateOfBirth"
+                    control={control}
+                    defaultValue={null}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error, invalid },
+                    }) => (
                       <DatePicker
-                        className="form-control"
-                        onChange={(e) => field.onChange(e)}
-                        value={field.value}
-                        dateFormat="d MMM yyyy"
-                        minDate={moment().subtract(150, "years")._d}
-                        maxDate={moment().subtract(18, "years")._d}
+                        label="Date of birth"
+                        disableFuture
+                        value={value}
+                        error={true}
+                        onChange={(value) =>
+                          onChange(moment(value).format("MM-DD-YYYY"))
+                        }
+                        renderInput={(params) => (
+                          <TextField
+                            error={Boolean(errors.dateOfBirth)}
+                            id="dateOfBirth"
+                            variant="standard"
+                            margin="dense"
+                            fullWidth
+                            color="primary"
+                            autoComplete="bday"
+                            {...params}
+                          />
+                        )}
                       />
-                    </InputGroup>
-                  )}
-                />
+                    )}
+                  />
+                </LocalizationProvider>
+
                 <p className="text-danger">
-                  {errors.date && errors.date.message}
+                  {errors.dateOfBirth && errors.dateOfBirth.message}
                 </p>
               </Form.Group>
             </Col>
@@ -144,13 +197,7 @@ const UserForm = () => {
                   fullWidth
                   variant="standard"
                   error={Boolean(errors.email)}
-                  {...register("email", {
-                    required: "requierd",
-                    pattern: {
-                      value: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/,
-                      message: "Invalid",
-                    },
-                  })}
+                  {...register("email")}
                 />
                 <p className="text-danger">
                   {errors.email && errors.email.message}
@@ -158,6 +205,7 @@ const UserForm = () => {
               </Form.Group>
             </Col>
           </Row>
+
           <Row>
             <Col md={6} className="mb-3">
               <Form.Group>
@@ -167,24 +215,8 @@ const UserForm = () => {
                   label="password"
                   fullWidth
                   variant="standard"
-                  error={Boolean(errors.email)}
-                  {...register("password", {
-                    required: "You must specify a password",
-                    pattern: {
-                      value:
-                        /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/,
-                      message:
-                        "password should contain atleast one number and one special character",
-                    },
-                    maxLength: {
-                      value: 16,
-                      message: "Password must have at least 16 characters",
-                    },
-                    minLength: {
-                      value: 4,
-                      message: "Password must have at least 4 characters",
-                    },
-                  })}
+                  error={Boolean(errors.password)}
+                  {...register("password")}
                 />
                 <p className="text-danger">
                   {errors.password && errors.password.message}
@@ -199,31 +231,32 @@ const UserForm = () => {
                   fullWidth
                   variant="standard"
                   label="Comfirm Password"
-                  error={Boolean(errors.comfirmpassword)}
-                  {...register("comfirmpassword", {
+                  error={Boolean(errors.confirmPassword)}
+                  {...register("confirmPassword", {
                     validate: (value) =>
                       value === password.current ||
                       "The passwords do not match",
                   })}
                 />
                 <p className="text-danger">
-                  {errors.comfirmpassword && errors.comfirmpassword.message}
+                  {errors.confirmPassword && errors.confirmPassword.message}
                 </p>
               </Form.Group>
             </Col>
             <Form.Group>
-              <TextField
+              <input
                 type="file"
                 label="profile picture"
                 fullWidth
                 multiple
                 variant="standard"
-                {...register("file", { required: "requierd" })}
+                accept={["image/jpeg", "image/png", "image/bmp"]}
+                {...register("image")}
                 placeholder="Enter your first name"
-                error={Boolean(errors.file)}
+                error={Boolean(errors.image)}
               />
               <p className="text-danger">
-                {errors.file && errors.file.message}
+                {errors.image && errors.image.message}
               </p>
             </Form.Group>
           </Row>
@@ -236,7 +269,7 @@ const UserForm = () => {
               className="mx-5"
               variant="primary"
               type="submit"
-              onClick={() => history.push(routes.Users.path)}
+              onClick={() => history.push(routes.User.path)}
             >
               Back To HomePage
             </Button>

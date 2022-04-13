@@ -44,7 +44,7 @@ const initState = {
       interviwer: "other",
     },
   ],
-  technology: [
+  technologies: [
     {
       id: "a1e67863-8382-4f89-9c69-b53980b1c242",
       technology: "angular",

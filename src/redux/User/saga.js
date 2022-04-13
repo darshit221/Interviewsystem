@@ -6,9 +6,9 @@ import { push } from "connected-react-router";
 /**
  * Request to create activity report.
  */
-export function* createUser({ interviewData }) {
+export function* createUser({ userData }) {
   try {
-    const { data } = yield axiosPost(interviewData, `submitInterView`);
+    const { data } = yield axiosPost(userData, `register`);
     console.log(data);
     yield put(actions.createUserSuccess(data.data));
     yield put(push("/interviewresult"));
@@ -23,7 +23,7 @@ export function* createUser({ interviewData }) {
  */
 export function* getUser() {
   try {
-    const { data } = yield axiosGet(`getAllInterViewResultDetails`);
+    const { data } = yield axiosGet(`getAllUsersDetails`);
     yield put(actions.getUserSuccess(data.data));
   } catch (error) {
     yield put(actions.getUserFailure(error.message, error.data || {}));
@@ -41,17 +41,17 @@ export function* getSingleUser({ userId }) {
 }
 
 export function* deleteUser({ userId }) {
-  const { data } = yield axiosDelete(`deleteInterViewResult/${userId}`);
+  const { data } = yield axiosDelete(`deleteUser/${userId}`);
   yield put(actions.getUserRequest());
 }
 
 export function* updateUser({ updatedData }) {
-  const { interviewData, userId } = updatedData;
-  console.log("dafdasfasdfasdf", interviewData, userId);
+  const { userData, userId } = updatedData;
+  console.log("dafdasfasdfasdf", userData, userId);
 
   try {
     const { data } = yield axiosPut(
-      interviewData,
+      userData,
       `updateInterViewResult/${userId}`
     );
     console.log("reaponse......", data);
@@ -65,10 +65,10 @@ export function* updateUser({ updatedData }) {
 
 export default function* userSaga() {
   yield all([
-    takeLatest(actions.CREATE_USER_REQUEST, createUser),
-    takeEvery(actions.GET_SINGLE_USER_REQUEST, getSingleUser),
+    // takeLatest(actions.CREATE_USER_REQUEST, createUser),
+    // takeEvery(actions.GET_SINGLE_USER_REQUEST, getSingleUser),
     takeEvery(actions.GET_USER_REQUEST, getUser),
     takeEvery(actions.DELETE_USER_REQUEST, deleteUser),
-    takeLatest(actions.UPDATE_USER_REQUEST, updateUser),
+    // takeLatest(actions.UPDATE_USER_REQUEST, updateUser),
   ]);
 }
