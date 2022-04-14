@@ -12,7 +12,7 @@ export function* createInterviewResult({ interviewData }) {
 
     yield put(actions.createInterviewResultSuccess(data.data));
     yield put(push("/interviewresult"));
-    alert("add");
+    alert("add successfully");
   } catch (error) {
     yield put(
       actions.createInterviewResultFailure(error.message, error.data || {})
@@ -34,10 +34,9 @@ export function* getInterviewResult() {
   }
 }
 export function* getSingleInterviewResult({ interviewId }) {
-  console.log(interviewId);
   try {
     const { data } = yield axiosGet(`getInterViewResultDetails/${interviewId}`);
-    console.log("data", data);
+
     yield put(actions.getSingleInterviewResultSuccess(data.data));
   } catch (error) {
     yield put(
@@ -53,14 +52,13 @@ export function* deleteInterviewResult({ interviewId }) {
 
 export function* updateInterviewResult({ updatedData }) {
   const { interviewData, interviewId } = updatedData;
-  console.log("dafdasfasdfasdf", interviewData, interviewId);
 
   try {
     const { data } = yield axiosPut(
       interviewData,
       `updateInterViewResult/${interviewId}`
     );
-    console.log("reaponse......", data);
+
     yield put(actions.updateInterviewResultSuccess(data.data));
     yield put(actions.getInterviewResultRequest());
     yield put(push("/interviewresult"));

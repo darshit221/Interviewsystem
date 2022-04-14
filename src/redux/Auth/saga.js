@@ -6,15 +6,15 @@ import { routes } from "../../routes";
 import { clearToken, getToken } from "../../helper/utility";
 
 export function* loginRequest({ payload }) {
-  console.log("first", payload);
   try {
     const { data } = yield axiosPost(payload, `login`);
-    console.log("data: ", data.data);
+
     let { token } = data.data;
     if (token) {
       yield localStorage.setItem("auth_token", token);
       yield localStorage.setItem("user", JSON.stringify(data.data));
       yield put(actions.loginSuccess(data.data, token));
+      alert("Wel-Come");
       yield put(push(routes.InterviewResult.path));
     } else {
       throw new Error("Invalid credentials provided.");
@@ -25,14 +25,12 @@ export function* loginRequest({ payload }) {
 }
 
 export function* checkAuthorization() {
-  console.log("CHECK AUTH:");
   const token = getToken().get("authToken");
-  console.log("token:", token);
+
   const user = getToken().get("user");
   if (token && user) {
     yield put(actions.loginSuccess(user, token));
   } else {
-    console.log("CHECK");
     clearToken();
     yield put(push("/"));
   }

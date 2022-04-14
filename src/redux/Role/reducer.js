@@ -1,4 +1,4 @@
-import actions from "./action";
+import roleActionss from "./action";
 
 const initState = {
   loading: false,
@@ -6,26 +6,26 @@ const initState = {
   role: [],
 };
 
-export default (state = initState, action) => {
-  switch (action.type) {
-    case actions.GET_ROLE_REQUEST:
+export default (state = initState, roleActions) => {
+  switch (roleActions.type) {
+    case roleActionss.GET_ROLE_REQUEST:
       return {
         ...state,
         errorData: {},
         loading: true,
         message: null,
       };
-    case actions.GET_ROLE_SUCCESS:
+    case roleActionss.GET_ROLE_SUCCESS:
       return {
         ...state,
         loading: false,
-        role: action.payload,
+        role: roleActions.payload,
       };
-    case actions.GET_ROLE_ERROR:
+    case roleActionss.GET_ROLE_ERROR:
       return {
         ...state,
         loading: false,
-        message: action.payload,
+        message: roleActions.payload,
       };
     default:
       return state;

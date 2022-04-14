@@ -1,7 +1,7 @@
 import actions from "./action";
 
 const initState = {
-  user: {},
+  singleUser: {},
   userList: [],
   loading: false,
   message: null,
@@ -56,15 +56,13 @@ export default (state = initState, action) => {
         loading: true,
         action: action.type,
       };
-    case actions.GET_SINGLE_USER_SUCCESS: {
-      console.log("action.payload", action.payload);
+    case actions.GET_SINGLE_USER_SUCCESS:
       return {
         ...state,
-        user: action.payload,
+        singleUser: action.payload,
         loading: false,
         action: action.type,
       };
-    }
 
     case actions.GET_SINGLE_USER_ERROR:
       return {

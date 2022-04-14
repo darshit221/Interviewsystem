@@ -11,7 +11,7 @@ export function* createUser({ userData }) {
     const { data } = yield axiosPost(userData, `register`);
     console.log(data);
     yield put(actions.createUserSuccess(data.data));
-    yield put(push("/interviewresult"));
+    yield put(push("/user"));
     alert("add");
   } catch (error) {
     yield put(actions.createUserFailure(error.message, error.data || {}));
@@ -32,7 +32,7 @@ export function* getUser() {
 export function* getSingleUser({ userId }) {
   console.log(userId);
   try {
-    const { data } = yield axiosGet(`getInterViewResultDetails/${userId}`);
+    const { data } = yield axiosGet(`getUserDetails/${userId}`);
     console.log("data", data);
     yield put(actions.getSingleUserSuccess(data.data));
   } catch (error) {
@@ -50,14 +50,11 @@ export function* updateUser({ updatedData }) {
   console.log("dafdasfasdfasdf", userData, userId);
 
   try {
-    const { data } = yield axiosPut(
-      userData,
-      `updateInterViewResult/${userId}`
-    );
+    const { data } = yield axiosPut(userData, `updateUserDetails/${userId}`);
     console.log("reaponse......", data);
     yield put(actions.updateUserSuccess(data.data));
     yield put(actions.getUserRequest());
-    yield put(push("/interviewresult"));
+    yield put(push("/user"));
   } catch (error) {
     yield put(actions.updateUserFailure(error.message, error.data || {}));
   }
@@ -65,10 +62,10 @@ export function* updateUser({ updatedData }) {
 
 export default function* userSaga() {
   yield all([
-    // takeLatest(actions.CREATE_USER_REQUEST, createUser),
-    // takeEvery(actions.GET_SINGLE_USER_REQUEST, getSingleUser),
+    takeLatest(actions.CREATE_USER_REQUEST, createUser),
+    takeEvery(actions.GET_SINGLE_USER_REQUEST, getSingleUser),
     takeEvery(actions.GET_USER_REQUEST, getUser),
     takeEvery(actions.DELETE_USER_REQUEST, deleteUser),
-    // takeLatest(actions.UPDATE_USER_REQUEST, updateUser),
+    takeLatest(actions.UPDATE_USER_REQUEST, updateUser),
   ]);
 }

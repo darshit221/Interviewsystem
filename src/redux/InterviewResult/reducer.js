@@ -116,15 +116,13 @@ export default (state = initState, action) => {
         loading: true,
         action: action.type,
       };
-    case actions.GET_SINGLE_INTERVIEW_RESULT_SUCCESS: {
-      console.log("action.payload", action.payload);
+    case actions.GET_SINGLE_INTERVIEW_RESULT_SUCCESS:
       return {
         ...state,
         interview: action.payload,
         loading: false,
         action: action.type,
       };
-    }
 
     case actions.GET_SINGLE_INTERVIEW_RESULT_ERROR:
       return {

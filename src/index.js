@@ -6,7 +6,6 @@ import { BrowserRouter } from "react-router-dom";
 import "./scss/volt.scss";
 
 // vendor styles
-import "react-datetime/css/react-datetime.css";
 
 import App from "./App";
 import { Provider } from "react-redux";

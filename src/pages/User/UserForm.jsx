@@ -14,19 +14,22 @@ import {
 import { Controller, useForm } from "react-hook-form";
 import DatePicker from "@mui/lab/DatePicker";
 import { routes } from "../../routes";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import actions from "../../redux/Role/action";
+import roleActions from "../../redux/Role/action";
+import actions from "../../redux/User/action";
 import { TextField } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { LocalizationProvider } from "@mui/lab";
+import * as toFormData from "to-formdata";
 
 const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
 const emailRegex =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 const schema = yup.object().shape({
+  role: yup.string().required("required"),
   first_name: yup.string().required("required"),
   last_name: yup.string().required("required"),
   email: yup
@@ -56,23 +59,17 @@ const schema = yup.object().shape({
     .test("required", "photo is required", (value) => value.length > 0),
 });
 const UserForm = () => {
-  const history = useHistory();
-  const dispatch = useDispatch();
+  const { location } = useHistory();
+  const { _id } = useParams();
 
-  let intialvalue = {
-    comfirmpassword: "",
-    image: "",
-    dob: new Date(),
-    email: "",
-    firstname: "",
-    lastname: "",
-    password: "@123",
-    role: "",
-  };
+  const dispatch = useDispatch();
+  const roles = useSelector((state) => state.role.role);
+  const { singleUser } = useSelector((state) => state.user);
   const {
     register,
     handleSubmit,
     watch,
+    setValue,
     control,
     formState: { errors },
   } = useForm({
@@ -82,14 +79,56 @@ const UserForm = () => {
   password.current = watch("password", "");
 
   useEffect(() => {
-    dispatch(actions.getRoleRequest());
-  }, []);
-
-  const roles = useSelector((state) => state.role.role);
+    dispatch(roleActions.getRoleRequest());
+  }, [dispatch]);
+  useEffect(() => {
+    location.pathname === `/user/edit/userform/${_id}` &&
+      dispatch(actions.getSingleUserRequest(_id));
+  }, [dispatch, _id, location.pathname]);
+  useEffect(() => {
+    if (singleUser && location.pathname === `/user/edit/userform/${_id}`) {
+      for (const key in singleUser) {
+        setValue(key, singleUser[key]);
+      }
+    }
+  }, [_id, singleUser, location.pathname, setValue]);
 
   const onSubmit = (data) => {
+    const addFormData = new FormData();
+    addFormData.append("role", data.role);
+    addFormData.append("first_name", data.first_name);
+    addFormData.append("last_name", data.last_name);
+    addFormData.append("email", data.email);
+    addFormData.append("password", data.password);
+    addFormData.append("dateOfBirth", data.dateOfBirth);
+    addFormData.append("image", data.image);
+    // console formdata
+    // for (var pair of addFormData.entries()) {
+    //   console.log(pair[0] + ", " + pair[1]);
+    // }
+    const editFormData = new FormData();
+    editFormData.append("role", data.role);
+    editFormData.append("first_name", data.first_name);
+    editFormData.append("last_name", data.last_name);
+    editFormData.append("email", data.email);
+    editFormData.append("password", data.password);
+    editFormData.append("dateOfBirth", data.dateOfBirth);
+    editFormData.append("image", data.image);
+    if (location.pathname === "/user/add/userform") {
+      console.log("add");
+      dispatch(actions.createUserRequest(addFormData));
+    }
+
+    dispatch(
+      actions.updateUserRequest({
+        userData: editFormData,
+        userId: _id,
+      })
+    );
+
     console.log(data);
   };
+
   return (
     <Card border="light" className="bg-white shadow-sm mb-4">
       <Card.Body>
@@ -100,12 +139,11 @@ const UserForm = () => {
               <Form.Label>Select your Role</Form.Label>
               <Form.Select {...register("role", { required: "requierd" })}>
                 <option value="">Role...</option>
-                <option value="HR">HR</option>
-                <option value="Interviwer">Interviwer</option>
                 {roles.map((role) => {
+                  const { roleType } = role;
                   return (
-                    <React.Fragment key={role.id}>
-                      <option value={role.roleType}>{role.roleType}</option>
+                    <React.Fragment key={role._id}>
+                      <option value={role._id}>{roleType}</option>
                     </React.Fragment>
                   );
                 })}
@@ -117,12 +155,12 @@ const UserForm = () => {
             <Col md={6} className="mb-3">
               <Form.Group className="mb-3">
                 <TextField
-                  fullWidth
+                  sx={{ width: "100%" }}
                   label="first_name"
-                  variant="standard"
+                  variant="outlined"
                   type="text"
                   {...register("first_name")}
-                  error={Boolean(errors.first_name)}
+                  error={!!errors.first_name}
                 />
                 <p className="text-danger">
                   {errors.first_name && errors.first_name.message}
@@ -132,12 +170,12 @@ const UserForm = () => {
             <Col md={6} className="mb-3">
               <Form.Group className="mb-3">
                 <TextField
-                  fullWidth
+                  sx={{ width: "100%" }}
                   label="last_name"
-                  variant="standard"
+                  variant="outlined"
                   type="text"
                   {...register("last_name")}
-                  error={Boolean(errors.last_name)}
+                  error={!!errors.last_name}
                 />
                 <p className="text-danger">
                   {errors.last_name && errors.last_name.message}
@@ -169,11 +207,11 @@ const UserForm = () => {
                         }
                         renderInput={(params) => (
                           <TextField
-                            error={Boolean(errors.dateOfBirth)}
+                            error={!!errors.dateOfBirth}
                             id="dateOfBirth"
-                            variant="standard"
+                            variant="outlined"
                             margin="dense"
-                            fullWidth
+                            sx={{ width: "100%" }}
                             color="primary"
                             autoComplete="bday"
                             {...params}
@@ -194,9 +232,9 @@ const UserForm = () => {
                 <TextField
                   type="email"
                   label="name@company.com"
-                  fullWidth
-                  variant="standard"
-                  error={Boolean(errors.email)}
+                  sx={{ width: "100%" }}
+                  variant="outlined"
+                  error={!!errors.email}
                   {...register("email")}
                 />
                 <p className="text-danger">
@@ -213,9 +251,9 @@ const UserForm = () => {
                 <TextField
                   type="password"
                   label="password"
-                  fullWidth
-                  variant="standard"
-                  error={Boolean(errors.password)}
+                  sx={{ width: "100%" }}
+                  variant="outlined"
+                  error={!!errors.password}
                   {...register("password")}
                 />
                 <p className="text-danger">
@@ -228,10 +266,10 @@ const UserForm = () => {
                 <Form.Label>Comfirm Password</Form.Label>
                 <TextField
                   type="password"
-                  fullWidth
-                  variant="standard"
+                  sx={{ width: "100%" }}
+                  variant="outlined"
                   label="Comfirm Password"
-                  error={Boolean(errors.confirmPassword)}
+                  error={!!errors.confirmPassword}
                   {...register("confirmPassword", {
                     validate: (value) =>
                       value === password.current ||
@@ -247,13 +285,13 @@ const UserForm = () => {
               <input
                 type="file"
                 label="profile picture"
-                fullWidth
+                sx={{ width: "100%" }}
                 multiple
-                variant="standard"
+                variant="outlined"
                 accept={["image/jpeg", "image/png", "image/bmp"]}
                 {...register("image")}
                 placeholder="Enter your first name"
-                error={Boolean(errors.image)}
+                error={!!errors.image}
               />
               <p className="text-danger">
                 {errors.image && errors.image.message}
@@ -268,8 +306,9 @@ const UserForm = () => {
             <Button
               className="mx-5"
               variant="primary"
-              type="submit"
-              onClick={() => history.push(routes.User.path)}
+              type="reset"
+              as={Link}
+              to={routes.User.path}
             >
               Back To HomePage
             </Button>

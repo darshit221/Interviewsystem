@@ -29,10 +29,10 @@ const MenuProps = {
   },
 };
 
-function getStyles(name, personName, theme) {
+function getStyles(name, filed, theme) {
   return {
     fontWeight:
-      personName.indexOf(name) === -1
+      filed.indexOf(name) === -1
         ? theme.typography.fontWeightRegular
         : theme.typography.fontWeightMedium,
   };
@@ -51,16 +51,18 @@ const InterviewResultForm = (props) => {
 
   const handleChange = (event) => {
     const {
-      target: { value },
+      target: { value, name },
     } = event;
-    setPersonName(typeof value === "string" ? value.split(",") : value);
+    console.log(name);
+    name === "interviewer" &&
+      setPersonName(typeof value === "string" ? value.split(",") : value);
 
-    setTechnology(typeof value === "string" ? value.split(",") : value);
+    name === "technologies" &&
+      setTechnology(typeof value === "string" ? value.split(",") : value);
   };
   const {
     register,
     handleSubmit,
-
     setValue,
     formState: { errors },
   } = useForm();
@@ -70,22 +72,15 @@ const InterviewResultForm = (props) => {
       dispatch(actions.getSingleInterviewResultRequest(_id));
   }, [_id, dispatch, location.pathname]);
 
+  console.log(".....", interviewer);
   useEffect(() => {
     if (
       interview &&
       location.pathname === `/interviewresult/edit/interviewresultform/${_id}`
     ) {
-      setValue("date", interview.date);
-      setValue("name", interview.name);
-      setValue("interviewer", interview.rounds);
-      setValue("technology", interview.technology);
-      setValue("experience", interview.experience);
-      setValue("rounds", interview.rounds);
-      setValue("codingStandard", interview.codingStandard);
-      setValue("communication", interview.communication);
-      setValue("practicalCompletion", interview.practicalCompletion);
-      setValue("technicalRound", interview.technicalRound);
-      setValue("notes", interview.notes);
+      for (const key in interview) {
+        setValue(key, interview[key]);
+      }
     }
   }, [_id, interview, location.pathname, setValue]);
 
@@ -116,7 +111,7 @@ const InterviewResultForm = (props) => {
         <Form noValidate onSubmit={handleSubmit(onSubmit)}>
           <Form.Group md="4" className="mb-3">
             <TextField
-              fullWidth
+              sx={{ width: "100%" }}
               id="outlined-basic"
               label=" Date"
               type="date"
@@ -125,7 +120,7 @@ const InterviewResultForm = (props) => {
                 shrink: true,
               }}
               {...register("date", { required: "requierd" })}
-              error={Boolean(errors.date)}
+              error={!!errors.date}
             />
             <p className="text-danger">{errors.date && errors.date.message}</p>
           </Form.Group>
@@ -133,12 +128,12 @@ const InterviewResultForm = (props) => {
             <Col md={6} className="mb-3">
               <Form.Group className="mb-3">
                 <TextField
-                  fullWidth
+                  sx={{ width: "100%" }}
                   label="name"
                   variant="outlined"
                   type="text"
                   {...register("name", { required: "requierd" })}
-                  error={Boolean(errors.name)}
+                  error={!!errors.name}
                 />
                 <p className="text-danger">
                   {errors.name && errors.name.message}
@@ -148,12 +143,12 @@ const InterviewResultForm = (props) => {
             <Col md={6} className="mb-3">
               <Form.Group className="mb-3">
                 <TextField
-                  fullWidth
+                  sx={{ width: "100%" }}
                   label="Experience"
                   variant="outlined"
                   type="number"
                   {...register("experience", { required: "requierd" })}
-                  error={Boolean(errors.experience)}
+                  error={!!errors.experience}
                 />
                 <p className="text-danger">
                   {errors.experience && errors.experience.message}
@@ -170,14 +165,14 @@ const InterviewResultForm = (props) => {
                 </InputLabel>
 
                 <Select
-                  fullWidth
+                  sx={{ width: "100%" }}
                   labelId="demo-multiple-chip-label"
                   id="demo-multiple-chip"
                   multiple
                   label="Technology"
                   variant="outlined"
-                  {...register("tecnology", { required: "requierd" })}
-                  error={Boolean(errors.tecnology)}
+                  {...register("technologies", { required: "requierd" })}
+                  error={!!errors.technologies}
                   value={technology}
                   onChange={handleChange}
                   input={
@@ -203,7 +198,7 @@ const InterviewResultForm = (props) => {
                   ))}
                 </Select>
                 <p className="text-danger">
-                  {errors.tecnology && errors.tecnology.message}
+                  {errors.technologies && errors.technologies.message}
                 </p>
               </Form.Group>
             </Col>
@@ -214,13 +209,13 @@ const InterviewResultForm = (props) => {
                 </InputLabel>
 
                 <Select
-                  fullWidth
+                  sx={{ width: "100%" }}
                   labelId="demo-multiple-chip-label"
                   id="demo-multiple-chip"
                   multiple
                   label="interviewer"
                   {...register("interviewer", { required: "requierd" })}
-                  error={Boolean(errors.interviewer)}
+                  error={!!errors.interviewer}
                   variant="outlined"
                   value={personName}
                   onChange={handleChange}
@@ -263,9 +258,9 @@ const InterviewResultForm = (props) => {
                 <Select
                   label="Round"
                   variant="outlined"
-                  fullWidth
+                  sx={{ width: "100%" }}
                   {...register("rounds", { required: "requierd" })}
-                  error={Boolean(errors.rounds)}
+                  error={!!errors.rounds}
                 >
                   <MenuItem value={"practical"}>practical</MenuItem>
                   <MenuItem value={"Technical"}>Technical</MenuItem>
@@ -279,11 +274,11 @@ const InterviewResultForm = (props) => {
               <Form.Group className="mb-3">
                 <InputLabel>Communication</InputLabel>
                 <Select
-                  fullWidth
+                  sx={{ width: "100%" }}
                   label="communication"
                   variant="outlined"
                   {...register("communication", { required: "requierd" })}
-                  error={Boolean(errors.communication)}
+                  error={!!errors.communication}
                 >
                   <MenuItem value={"Expert"}>Expert</MenuItem>
                   <MenuItem value={"Good"}>Good</MenuItem>
@@ -300,7 +295,7 @@ const InterviewResultForm = (props) => {
             <Col md={6} className="mb-3">
               <Form.Group className="mb-3">
                 <TextField
-                  fullWidth
+                  sx={{ width: "100%" }}
                   label="Practical Completion"
                   variant="outlined"
                   type="number"
@@ -318,7 +313,7 @@ const InterviewResultForm = (props) => {
                   {...register("practicalCompletion", {
                     required: "requierd",
                   })}
-                  error={Boolean(errors.practicalCompletion)}
+                  error={!!errors.practicalCompletion}
                 />
 
                 <p className="text-danger">
@@ -330,7 +325,7 @@ const InterviewResultForm = (props) => {
             <Col md={6} className="mb-3">
               <Form.Group className="mb-3">
                 <TextField
-                  fullWidth
+                  sx={{ width: "100%" }}
                   label="Coding Standard"
                   variant="outlined"
                   type="number"
@@ -346,7 +341,7 @@ const InterviewResultForm = (props) => {
                     },
                   })}
                   {...register("codingStandard", { required: "requierd" })}
-                  error={Boolean(errors.codingStandard)}
+                  error={!!errors.codingStandard}
                 />
 
                 <p className="text-danger">
@@ -359,7 +354,7 @@ const InterviewResultForm = (props) => {
             <Col md={6} className="mb-3">
               <Form.Group className="mb-3">
                 <TextField
-                  fullWidth
+                  sx={{ width: "100%" }}
                   label="Technical Round"
                   variant="outlined"
                   type="number"
@@ -375,7 +370,7 @@ const InterviewResultForm = (props) => {
                     },
                   })}
                   {...register("technicalRound", { required: "requierd" })}
-                  error={Boolean(errors.technicalRound)}
+                  error={!!errors.technicalRound}
                 />
 
                 <p className="text-danger">
@@ -387,13 +382,13 @@ const InterviewResultForm = (props) => {
               <Form.Group className="mb-3">
                 <TextField
                   type="Text"
-                  fullWidth
+                  sx={{ width: "100%" }}
                   variant="outlined"
                   label="Your Answer"
                   {...register("notes", {
                     required: "requierd",
                   })}
-                  error={Boolean(errors.notes)}
+                  error={!!errors.notes}
                 />
                 <p className="text-danger">
                   {errors.notes && errors.notes.message}

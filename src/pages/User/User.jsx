@@ -65,7 +65,7 @@ const User = () => {
             </thead>
             <tbody>
               {userList.map((value) => {
-                const { _id, first_name, last_name, email } = value;
+                const { _id, first_name, last_name, dateOfBirth } = value;
                 return (
                   <tr key={_id}>
                     <td>
@@ -75,7 +75,7 @@ const User = () => {
                       <span className="fw-normal">{last_name}</span>
                     </td>
                     <td>
-                      <span className="fw-normal">{email}</span>
+                      <span className="fw-normal">{dateOfBirth}</span>
                     </td>
                     <td>
                       <Button
