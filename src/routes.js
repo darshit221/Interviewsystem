@@ -10,7 +10,6 @@ import Signin from "./pages/login/Signin";
 // components
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
-import Preloader from "./components/Preloader";
 import InterviewResultForm from "./pages/interviewresult/InterviewResultForm";
 import UserForm from "./pages/User/UserForm";
 import { useSelector } from "react-redux";
@@ -62,7 +61,7 @@ const UnRestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
 
 export const Routes = ({ history }) => {
   const isLoggedIn = useSelector((state) => state.auth.token !== null);
-
+  console.log(useRole());
   return (
     <ConnectedRouter history={history}>
       <Switch>
@@ -72,7 +71,7 @@ export const Routes = ({ history }) => {
           component={Signin}
           isLoggedIn={isLoggedIn}
         />
-        {/* pages */}
+
         <RestrictedRoute
           exact
           path={routes.InterviewResult.path}

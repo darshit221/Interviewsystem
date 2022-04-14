@@ -3,9 +3,6 @@ import actions from "./action";
 import { axiosPost, axiosGet, axiosDelete, axiosPut } from "../axiosHelper";
 import { push } from "connected-react-router";
 
-/**
- * Request to create activity report.
- */
 export function* createInterviewResult({ interviewData }) {
   try {
     const { data } = yield axiosPost(interviewData, `submitInterView`);
@@ -19,9 +16,6 @@ export function* createInterviewResult({ interviewData }) {
   }
 }
 
-/**
- * Request to get activity list.
- */
 export function* getInterviewResult() {
   try {
     const { data } = yield axiosGet(`getAllInterViewResultDetails`);
@@ -44,7 +38,7 @@ export function* getSingleInterviewResult({ interviewId }) {
 }
 
 export function* deleteInterviewResult({ interviewId }) {
-  const { data } = yield axiosDelete(`deleteInterViewResult/${interviewId}`);
+  yield axiosDelete(`deleteInterViewResult/${interviewId}`);
   yield put(actions.getInterviewResultRequest());
 }
 

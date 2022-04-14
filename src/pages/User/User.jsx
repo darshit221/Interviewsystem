@@ -1,33 +1,21 @@
 import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faEdit,
-  faEllipsisH,
-  faPlus,
-  faTrashAlt,
-} from "@fortawesome/free-solid-svg-icons";
-import {
-  Nav,
-  Card,
-  Button,
-  Table,
-  Dropdown,
-  Pagination,
-  ButtonGroup,
-} from "@themesberg/react-bootstrap";
-
+import { faEdit, faPlus, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { Card, Button, Table } from "@themesberg/react-bootstrap";
+import { confirm } from "react-confirm-box";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { routes } from "../../routes";
 import actions from "../../redux/User/action";
-import { confirm } from "react-confirm-box";
-import { useDispatch, useSelector } from "react-redux";
 
-const User = () => {
+function User() {
   const dispatch = useDispatch();
+  const { userList } = useSelector((state) => state.user);
 
   useEffect(() => {
     dispatch(actions.getUserRequest());
   }, [dispatch]);
+
   const UserDeleteHandler = async (_id) => {
     const result = await confirm("Are you sure?");
     if (result) {
@@ -35,7 +23,6 @@ const User = () => {
       return;
     }
   };
-  const { userList } = useSelector((state) => state.user);
 
   return (
     <>
@@ -56,17 +43,21 @@ const User = () => {
           <Table hover className="user-table align-items-center">
             <thead>
               <tr>
+                <th className="border-bottom">#</th>
                 <th className="border-bottom">First Name</th>
                 <th className="border-bottom">Last Name</th>
-                <th className="border-bottom">Email</th>
+                <th className="border-bottom">Birth Date</th>
                 <th className="border-bottom">Action</th>
               </tr>
             </thead>
             <tbody>
-              {userList.map((value) => {
+              {userList.map((value, index) => {
                 const { _id, first_name, last_name, dateOfBirth } = value;
                 return (
                   <tr key={_id}>
+                    <td>
+                      <span className="fw-normal">{index + 1}</span>
+                    </td>
                     <td>
                       <span className="fw-normal">{first_name}</span>
                     </td>
@@ -74,7 +65,9 @@ const User = () => {
                       <span className="fw-normal">{last_name}</span>
                     </td>
                     <td>
-                      <span className="fw-normal">{dateOfBirth}</span>
+                      <span className="fw-normal">
+                        {dateOfBirth.slice(0, 10)}
+                      </span>
                     </td>
                     <td>
                       <Button
@@ -101,25 +94,9 @@ const User = () => {
               })}
             </tbody>
           </Table>
-          <Card.Footer className="px-3 border-0 d-lg-flex align-items-center justify-content-between">
-            <Nav>
-              <Pagination className="mb-2 mb-lg-0">
-                <Pagination.Prev>Previous</Pagination.Prev>
-                <Pagination.Item active>1</Pagination.Item>
-                <Pagination.Item>2</Pagination.Item>
-                <Pagination.Item>3</Pagination.Item>
-                <Pagination.Item>4</Pagination.Item>
-                <Pagination.Item>5</Pagination.Item>
-                <Pagination.Next>Next</Pagination.Next>
-              </Pagination>
-            </Nav>
-            <small className="fw-bold">
-              Showing <b>{234}</b> out of <b>25</b> entries
-            </small>
-          </Card.Footer>
         </Card.Body>
       </Card>
     </>
   );
-};
+}
 export default User;

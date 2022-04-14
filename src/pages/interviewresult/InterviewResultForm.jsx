@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
-
 import { Col, Row, Card, Form, Button } from "@themesberg/react-bootstrap";
 import { useForm } from "react-hook-form";
 import { routes } from "../../routes";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import actions from "../../redux/InterviewResult/action";
 import {
   Box,
   Chip,
-  FormControl,
   InputLabel,
   MenuItem,
   OutlinedInput,
@@ -17,6 +14,7 @@ import {
   TextField,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import actions from "../../redux/InterviewResult/action";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -37,17 +35,18 @@ function getStyles(name, filed, theme) {
         : theme.typography.fontWeightMedium,
   };
 }
-const InterviewResultForm = (props) => {
+
+function InterviewResultForm() {
+  const [personName, setPersonName] = useState([]);
+  const [technology, setTechnology] = useState([]);
   const { location } = useHistory();
   const { _id } = useParams();
   const dispatch = useDispatch();
+  const theme = useTheme();
+
   const { interview, interviewer, technologies } = useSelector(
     (state) => state.interviewResult
   );
-
-  const theme = useTheme();
-  const [personName, setPersonName] = useState([]);
-  const [technology, setTechnology] = useState([]);
 
   const handleChange = (event) => {
     const {
@@ -60,6 +59,7 @@ const InterviewResultForm = (props) => {
     name === "technologies" &&
       setTechnology(typeof value === "string" ? value.split(",") : value);
   };
+
   const {
     register,
     handleSubmit,
@@ -119,6 +119,7 @@ const InterviewResultForm = (props) => {
             />
             <p className="text-danger">{errors.date && errors.date.message}</p>
           </Form.Group>
+
           <Row>
             <Col md={6} className="mb-3">
               <Form.Group className="mb-3">
@@ -135,6 +136,7 @@ const InterviewResultForm = (props) => {
                 </p>
               </Form.Group>
             </Col>
+
             <Col md={6} className="mb-3">
               <Form.Group className="mb-3">
                 <TextField
@@ -197,6 +199,7 @@ const InterviewResultForm = (props) => {
                 </p>
               </Form.Group>
             </Col>
+
             <Col md={6} className="mb-3">
               <Form.Group>
                 <InputLabel id="demo-simple-select-outlined-label">
@@ -249,7 +252,6 @@ const InterviewResultForm = (props) => {
                 <InputLabel id="demo-simple-select-outlined-label">
                   Round
                 </InputLabel>
-
                 <Select
                   label="Round"
                   variant="outlined"
@@ -265,6 +267,7 @@ const InterviewResultForm = (props) => {
                 </p>
               </Form.Group>
             </Col>
+
             <Col md={6} className="mb-3">
               <Form.Group className="mb-3">
                 <InputLabel>Communication</InputLabel>
@@ -317,6 +320,7 @@ const InterviewResultForm = (props) => {
                 </p>
               </Form.Group>
             </Col>
+
             <Col md={6} className="mb-3">
               <Form.Group className="mb-3">
                 <TextField
@@ -338,13 +342,13 @@ const InterviewResultForm = (props) => {
                   {...register("codingStandard", { required: "requierd" })}
                   error={!!errors.codingStandard}
                 />
-
                 <p className="text-danger">
                   {errors.codingStandard && errors.codingStandard.message}
                 </p>
               </Form.Group>
             </Col>
           </Row>
+
           <Row>
             <Col md={6} className="mb-3">
               <Form.Group className="mb-3">
@@ -373,6 +377,7 @@ const InterviewResultForm = (props) => {
                 </p>
               </Form.Group>
             </Col>
+
             <Col md={6} className="mb-3">
               <Form.Group className="mb-3">
                 <TextField
@@ -410,6 +415,6 @@ const InterviewResultForm = (props) => {
       </Card.Body>
     </Card>
   );
-};
+}
 
 export default InterviewResultForm;

@@ -25,7 +25,7 @@ export default () => {
               className="order-2 order-lg-1 text-center text-lg-left"
             >
               <h1 className="text-primary mt-5">
-                Something has gone <span className="fw-bolder">seriously</span>{" "}
+                Something has gone <span className="fw-bolder">seriously</span>
                 wrong
               </h1>
               <p className="lead my-4">

@@ -3,18 +3,13 @@ import SimpleBar from "simplebar-react";
 import { useLocation } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faFileAlt,
-  faSignOutAlt,
-  faTimes,
-} from "@fortawesome/free-solid-svg-icons";
+import { faSignOutAlt, faTimes } from "@fortawesome/free-solid-svg-icons";
 import {
   Nav,
   Badge,
   Image,
   Button,
   Dropdown,
-  Accordion,
   Navbar,
 } from "@themesberg/react-bootstrap";
 import { Link } from "react-router-dom";

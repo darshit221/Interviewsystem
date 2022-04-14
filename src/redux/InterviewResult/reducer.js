@@ -89,7 +89,6 @@ export default (state = initState, action) => {
         action: action.type,
       };
 
-    //GET
     case actions.GET_INTERVIEW_RESULT_REQUEST:
       return {
         ...state,
@@ -131,7 +130,6 @@ export default (state = initState, action) => {
         action: action.type,
       };
 
-    //DELETE
     case actions.DELETE_INTERVIEW_RESULT_REQUEST:
       return {
         ...state,

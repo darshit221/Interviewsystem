@@ -1,40 +1,30 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import moment from "moment-timezone";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
-
-import {
-  Col,
-  Row,
-  Card,
-  Form,
-  Button,
-  InputGroup,
-} from "@themesberg/react-bootstrap";
+import { Col, Row, Card, Form, Button } from "@themesberg/react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
 import DatePicker from "@mui/lab/DatePicker";
-import { routes } from "../../routes";
-import { Link, useHistory, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import roleActions from "../../redux/Role/action";
-import actions from "../../redux/User/action";
 import { TextField } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import { Link, useHistory, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { LocalizationProvider } from "@mui/lab";
-import * as toFormData from "to-formdata";
+import { routes } from "../../routes";
+import roleActions from "../../redux/Role/action";
+import actions from "../../redux/User/action";
 
-const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
-const emailRegex =
+const passwordReg = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+const emailReg =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
 const schema = yup.object().shape({
   role: yup.string().required("required"),
   first_name: yup.string().required("required"),
   last_name: yup.string().required("required"),
   email: yup
     .string()
-    .matches(emailRegex, "Must be a valid email!")
+    .matches(emailReg, "Must be a valid email!")
     .required("required"),
   dateOfBirth: yup
     .string()
@@ -45,7 +35,7 @@ const schema = yup.object().shape({
   password: yup
     .string()
     .matches(
-      passwordRegex,
+      passwordReg,
       "one lowercase, uppercase, number, special character required!"
     )
     .min(8, "Minimun 8 Character Required!")
@@ -56,13 +46,14 @@ const schema = yup.object().shape({
     .required("Required Field!"),
   image: yup
     .mixed()
-    .test("required", "photo is required", (value) => value.length > 0),
+    .test("required", "image is required", (value) => value.length > 0),
 });
-const UserForm = () => {
+
+function UserForm() {
   const { location } = useHistory();
   const { _id } = useParams();
-
   const dispatch = useDispatch();
+
   const roles = useSelector((state) => state.role.role);
   const { singleUser } = useSelector((state) => state.user);
   const {
@@ -75,16 +66,19 @@ const UserForm = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
+
   const password = useRef({});
   password.current = watch("password", "");
 
   useEffect(() => {
     dispatch(roleActions.getRoleRequest());
   }, [dispatch]);
+
   useEffect(() => {
     location.pathname === `/user/edit/userform/${_id}` &&
       dispatch(actions.getSingleUserRequest(_id));
   }, [dispatch, _id, location.pathname]);
+
   useEffect(() => {
     if (singleUser && location.pathname === `/user/edit/userform/${_id}`) {
       for (const key in singleUser) {
@@ -102,10 +96,7 @@ const UserForm = () => {
     addFormData.append("password", data.password);
     addFormData.append("dateOfBirth", data.dateOfBirth);
     addFormData.append("image", data.image);
-    // console formdata
-    // for (var pair of addFormData.entries()) {
-    //   console.log(pair[0] + ", " + pair[1]);
-    // }
+
     const editFormData = new FormData();
     editFormData.append("role", data.role);
     editFormData.append("first_name", data.first_name);
@@ -114,6 +105,7 @@ const UserForm = () => {
     editFormData.append("password", data.password);
     editFormData.append("dateOfBirth", data.dateOfBirth);
     editFormData.append("image", data.image);
+
     if (location.pathname === "/user/add/userform") {
       dispatch(actions.createUserRequest(addFormData));
     }
@@ -129,7 +121,7 @@ const UserForm = () => {
   return (
     <Card border="light" className="bg-white shadow-sm mb-4">
       <Card.Body>
-        <h5 className="mb-4">User Details</h5>
+        <h5 className="mb-4">User Registration</h5>
         <Form noValidate onSubmit={handleSubmit(onSubmit)}>
           <Row>
             <Form.Group className="mb-3">
@@ -149,11 +141,12 @@ const UserForm = () => {
                 {errors.role && errors.role.message}
               </p>
             </Form.Group>
+
             <Col md={6} className="mb-3">
               <Form.Group className="mb-3">
                 <TextField
                   sx={{ width: "100%" }}
-                  label="first_name"
+                  label="firstName"
                   variant="outlined"
                   type="text"
                   {...register("first_name")}
@@ -164,11 +157,12 @@ const UserForm = () => {
                 </p>
               </Form.Group>
             </Col>
+
             <Col md={6} className="mb-3">
               <Form.Group className="mb-3">
                 <TextField
                   sx={{ width: "100%" }}
-                  label="last_name"
+                  label="lastName"
                   variant="outlined"
                   type="text"
                   {...register("last_name")}
@@ -184,7 +178,6 @@ const UserForm = () => {
           <Row className="align-items-center">
             <Col md={6} className="mb-3">
               <Form.Group md="4" className="mb-3">
-                <Form.Label>Date of Birth</Form.Label>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <Controller
                     name="dateOfBirth"
@@ -224,11 +217,12 @@ const UserForm = () => {
                 </p>
               </Form.Group>
             </Col>
+
             <Col md={6} className="mb-3">
               <Form.Group>
                 <TextField
                   type="email"
-                  label="name@company.com"
+                  label="Email"
                   sx={{ width: "100%" }}
                   variant="outlined"
                   error={!!errors.email}
@@ -244,7 +238,6 @@ const UserForm = () => {
           <Row>
             <Col md={6} className="mb-3">
               <Form.Group>
-                <Form.Label>Password</Form.Label>
                 <TextField
                   type="password"
                   label="password"
@@ -258,9 +251,9 @@ const UserForm = () => {
                 </p>
               </Form.Group>
             </Col>
+
             <Col md={6} className="mb-3">
               <Form.Group>
-                <Form.Label>Comfirm Password</Form.Label>
                 <TextField
                   type="password"
                   sx={{ width: "100%" }}
@@ -278,7 +271,9 @@ const UserForm = () => {
                 </p>
               </Form.Group>
             </Col>
+
             <Form.Group>
+              <Form.Label>Profile Picture</Form.Label>
               <input
                 type="file"
                 label="profile picture"
@@ -314,6 +309,6 @@ const UserForm = () => {
       </Card.Body>
     </Card>
   );
-};
+}
 
 export default UserForm;

@@ -29,7 +29,6 @@ export default (state = initState, action) => {
         action: action.type,
       };
 
-    //GET
     case actions.GET_USER_REQUEST:
       return {
         ...state,
@@ -71,7 +70,6 @@ export default (state = initState, action) => {
         action: action.type,
       };
 
-    //DELETE
     case actions.DELETE_USER_REQUEST:
       return {
         ...state,

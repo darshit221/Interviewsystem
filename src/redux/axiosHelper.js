@@ -2,10 +2,6 @@ import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_API_URL;
 
-/**
- * Gets the headers.
- *
- */
 const getHeaders = () => {
   let authToken = localStorage.auth_token ? localStorage.auth_token : null;
 
@@ -21,9 +17,6 @@ const getHeaders = () => {
   return config;
 };
 
-/**
- * Post request from axios
- */
 const axiosPost = async (data, url) => {
   try {
     let request = await axios.post(`${BASE_URL}/${url}`, data, getHeaders());
@@ -33,9 +26,6 @@ const axiosPost = async (data, url) => {
   }
 };
 
-/**
- * Get call from Axios
- */
 const axiosGet = async (url) => {
   try {
     return await axios.get(`${BASE_URL}/${url}`, getHeaders());
@@ -44,9 +34,6 @@ const axiosGet = async (url) => {
   }
 };
 
-/**
- * Delete call from axios
- */
 const axiosDelete = async (url) => {
   let request = await axios.delete(`${BASE_URL}/${url}`, getHeaders());
   if (request.data && request.data.message) {

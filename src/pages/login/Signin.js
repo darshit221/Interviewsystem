@@ -1,10 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faAngleLeft,
-  faEnvelope,
-  faUnlockAlt,
-} from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
 import {
   faFacebookF,
   faGithub,
@@ -21,7 +17,6 @@ import {
   InputGroup,
 } from "@themesberg/react-bootstrap";
 import { Link } from "react-router-dom";
-
 import { routes } from "../../routes";
 import BgImage from "../../assets/img/illustrations/signin.svg";
 import { useForm } from "react-hook-form";
@@ -42,16 +37,6 @@ export default () => {
     <main>
       <section className="d-flex align-items-center my-5 mt-lg-6 mb-lg-5">
         <Container>
-          <p className="text-center">
-            <Card.Link
-              as={Link}
-              to={routes.InterviewResult.path}
-              className="text-gray-700"
-            >
-              <FontAwesomeIcon icon={faAngleLeft} className="me-2" /> Back to
-              homepage
-            </Card.Link>
-          </p>
           <Row
             className="justify-content-center form-bg-image"
             style={{ backgroundImage: `url(${BgImage})` }}

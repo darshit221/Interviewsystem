@@ -4,11 +4,7 @@ export function clearToken() {
   localStorage.removeItem("auth_token");
   localStorage.removeItem("user");
 }
-/**
- * Gets the token.
- *
- * @return     {Map}  The token.
- */
+
 export function getToken() {
   try {
     const authToken = localStorage.getItem("auth_token");

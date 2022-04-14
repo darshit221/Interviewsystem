@@ -1,10 +1,7 @@
-import { all, takeEvery, put, takeLatest } from "redux-saga/effects";
+import { all, put, takeLatest } from "redux-saga/effects";
 import roleActions from "./action";
 import { axiosGet } from "../axiosHelper";
 
-/**
- * Request to get duration list.
- */
 export function* getRole() {
   try {
     const { data } = yield axiosGet(`getAllRole`);

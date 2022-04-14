@@ -3,9 +3,6 @@ import actions from "./action";
 import { axiosPost, axiosGet, axiosDelete, axiosPut } from "../axiosHelper";
 import { push } from "connected-react-router";
 
-/**
- * Request to create activity report.
- */
 export function* createUser({ userData }) {
   try {
     const { data } = yield axiosPost(userData, `register`);
@@ -18,9 +15,6 @@ export function* createUser({ userData }) {
   }
 }
 
-/**
- * Request to get activity list.
- */
 export function* getUser() {
   try {
     const { data } = yield axiosGet(`getAllUsersDetails`);
@@ -40,7 +34,7 @@ export function* getSingleUser({ userId }) {
 }
 
 export function* deleteUser({ userId }) {
-  const { data } = yield axiosDelete(`deleteUser/${userId}`);
+  yield axiosDelete(`deleteUser/${userId}`);
   yield put(actions.getUserRequest());
 }
 
