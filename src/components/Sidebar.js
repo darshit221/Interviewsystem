@@ -18,44 +18,22 @@ import {
   Navbar,
 } from "@themesberg/react-bootstrap";
 import { Link } from "react-router-dom";
-
+import authActions from "../redux/Auth/action";
 import { routes } from "../routes";
 import ReactHero from "../assets/img/technologies/react-hero-logo.svg";
-import ProfilePicture from "../assets/img/team/profile-picture-3.jpg";
+import ProfilePicture from "../assets/img/profile-picture.jpg";
+import { useSelector, useDispatch } from "react-redux";
+import useRole from "../helper/useRole";
 
 export default (props = {}) => {
   const location = useLocation();
   const { pathname } = location;
   const [show, setShow] = useState(false);
   const showClass = show ? "show" : "";
-
   const onCollapse = () => setShow(!show);
-
-  const CollapsableNavItem = (props) => {
-    const { eventKey, title, icon, children = null } = props;
-    const defaultKey = pathname.indexOf(eventKey) !== -1 ? eventKey : "";
-
-    return (
-      <Accordion as={Nav.Item} defaultActiveKey={defaultKey}>
-        <Accordion.Item eventKey={eventKey}>
-          <Accordion.Button
-            as={Nav.Link}
-            className="d-flex justify-content-between align-items-center"
-          >
-            <span>
-              <span className="sidebar-icon">
-                <FontAwesomeIcon icon={icon} />{" "}
-              </span>
-              <span className="sidebar-text">{title}</span>
-            </span>
-          </Accordion.Button>
-          <Accordion.Body className="multi-level">
-            <Nav className="flex-column">{children}</Nav>
-          </Accordion.Body>
-        </Accordion.Item>
-      </Accordion>
-    );
-  };
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  const { first_name, last_name } = user;
 
   const NavItem = (props) => {
     const {
@@ -147,13 +125,16 @@ export default (props = {}) => {
                   />
                 </div>
                 <div className="d-block">
-                  <h6>Hi, Jane</h6>
+                  <h6>
+                    <span>{first_name}</span> <span>{last_name}</span>
+                  </h6>
                   <Button
                     as={Link}
                     variant="secondary"
                     size="xs"
                     to={routes.Signin.path}
                     className="text-dark"
+                    onClick={() => dispatch(authActions.logout())}
                   >
                     <FontAwesomeIcon icon={faSignOutAlt} className="me-2" />
                     Sign Out
@@ -174,33 +155,9 @@ export default (props = {}) => {
               <NavItem
                 title="InterView Result"
                 link={routes.InterviewResult.path}
-                // icon={faChartPie}
               />
 
-              {true && <NavItem title="User" link={routes.User.path} />}
-
-              <CollapsableNavItem
-                eventKey="examples/"
-                title="Page Examples"
-                icon={faFileAlt}
-              >
-                <NavItem title="Sign In" link={routes.Signin.path} />
-                <NavItem title="Sign Up" link={routes.Signup.path} />
-                <NavItem
-                  title="Forgot password"
-                  link={routes.ForgotPassword.path}
-                />
-                <NavItem
-                  title="Reset password"
-                  link={routes.ResetPassword.path}
-                />
-                <NavItem title="Lock" link={routes.Lock.path} />
-                <NavItem title="404 Not Found" link={routes.NotFound.path} />
-                <NavItem
-                  title="500 Server Error"
-                  link={routes.ServerError.path}
-                />
-              </CollapsableNavItem>
+              {useRole() && <NavItem title="User" link={routes.User.path} />}
 
               <Dropdown.Divider className="my-3 border-indigo" />
             </Nav>

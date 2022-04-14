@@ -115,7 +115,6 @@ const UserForm = () => {
     editFormData.append("dateOfBirth", data.dateOfBirth);
     editFormData.append("image", data.image);
     if (location.pathname === "/user/add/userform") {
-      console.log("add");
       dispatch(actions.createUserRequest(addFormData));
     }
 
@@ -125,8 +124,6 @@ const UserForm = () => {
         userId: _id,
       })
     );
-
-    console.log(data);
   };
 
   return (

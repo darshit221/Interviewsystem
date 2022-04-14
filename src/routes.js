@@ -15,6 +15,8 @@ import InterviewResultForm from "./pages/interviewresult/InterviewResultForm";
 import UserForm from "./pages/User/UserForm";
 import { useSelector } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
+import useRole from "./helper/useRole";
+import NotFound from "./pages/ErrorPages/NotFound";
 
 const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
   <Route
@@ -60,9 +62,8 @@ const UnRestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
 
 export const Routes = ({ history }) => {
   const isLoggedIn = useSelector((state) => state.auth.token !== null);
-  console.log(isLoggedIn);
+
   return (
-    // console.log(isLoggedIn)
     <ConnectedRouter history={history}>
       <Switch>
         <UnRestrictedRoute
@@ -90,7 +91,7 @@ export const Routes = ({ history }) => {
           component={InterviewResultForm}
           isLoggedIn={isLoggedIn}
         />
-        {true && (
+        {useRole() && (
           <RestrictedRoute
             exact
             path={routes.User.path}
@@ -112,7 +113,7 @@ export const Routes = ({ history }) => {
           isLoggedIn={isLoggedIn}
         />
 
-        <Redirect to={routes.NotFound.path} />
+        <Route path={routes.NotFound.path} component={NotFound} />
       </Switch>
     </ConnectedRouter>
   );
@@ -132,12 +133,6 @@ export const routes = {
   },
   AddUserForm: { path: "/user/add/userform" },
   EditUserForm: { path: "/user/edit/userform/:_id" },
-  Billing: { path: "/examples/billing" },
-  Invoice: { path: "/examples/invoice" },
   Signup: { path: "/examples/sign-up" },
-  ForgotPassword: { path: "/examples/forgot-password" },
-  ResetPassword: { path: "/examples/reset-password" },
-  Lock: { path: "/examples/lock" },
-  NotFound: { path: "/examples/404" },
-  ServerError: { path: "/examples/500" },
+  NotFound: { path: "*" },
 };

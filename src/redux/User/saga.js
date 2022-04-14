@@ -9,7 +9,7 @@ import { push } from "connected-react-router";
 export function* createUser({ userData }) {
   try {
     const { data } = yield axiosPost(userData, `register`);
-    console.log(data);
+
     yield put(actions.createUserSuccess(data.data));
     yield put(push("/user"));
     alert("add");
@@ -30,10 +30,9 @@ export function* getUser() {
   }
 }
 export function* getSingleUser({ userId }) {
-  console.log(userId);
   try {
     const { data } = yield axiosGet(`getUserDetails/${userId}`);
-    console.log("data", data);
+
     yield put(actions.getSingleUserSuccess(data.data));
   } catch (error) {
     yield put(actions.geSingletUserFailure(error.message, error.data || {}));
@@ -47,11 +46,10 @@ export function* deleteUser({ userId }) {
 
 export function* updateUser({ updatedData }) {
   const { userData, userId } = updatedData;
-  console.log("dafdasfasdfasdf", userData, userId);
 
   try {
     const { data } = yield axiosPut(userData, `updateUserDetails/${userId}`);
-    console.log("reaponse......", data);
+
     yield put(actions.updateUserSuccess(data.data));
     yield put(actions.getUserRequest());
     yield put(push("/user"));

@@ -34,10 +34,9 @@ const User = () => {
       dispatch(actions.deleteUserRequest(_id));
       return;
     }
-    console.log("You click No!");
   };
   const { userList } = useSelector((state) => state.user);
-  console.log(userList);
+
   return (
     <>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">

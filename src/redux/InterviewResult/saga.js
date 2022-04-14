@@ -9,7 +9,6 @@ import { push } from "connected-react-router";
 export function* createInterviewResult({ interviewData }) {
   try {
     const { data } = yield axiosPost(interviewData, `submitInterView`);
-
     yield put(actions.createInterviewResultSuccess(data.data));
     yield put(push("/interviewresult"));
     alert("add successfully");
@@ -36,7 +35,6 @@ export function* getInterviewResult() {
 export function* getSingleInterviewResult({ interviewId }) {
   try {
     const { data } = yield axiosGet(`getInterViewResultDetails/${interviewId}`);
-
     yield put(actions.getSingleInterviewResultSuccess(data.data));
   } catch (error) {
     yield put(
@@ -58,7 +56,6 @@ export function* updateInterviewResult({ updatedData }) {
       interviewData,
       `updateInterViewResult/${interviewId}`
     );
-
     yield put(actions.updateInterviewResultSuccess(data.data));
     yield put(actions.getInterviewResultRequest());
     yield put(push("/interviewresult"));

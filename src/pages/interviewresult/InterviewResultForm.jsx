@@ -53,7 +53,7 @@ const InterviewResultForm = (props) => {
     const {
       target: { value, name },
     } = event;
-    console.log(name);
+
     name === "interviewer" &&
       setPersonName(typeof value === "string" ? value.split(",") : value);
 
@@ -72,7 +72,6 @@ const InterviewResultForm = (props) => {
       dispatch(actions.getSingleInterviewResultRequest(_id));
   }, [_id, dispatch, location.pathname]);
 
-  console.log(".....", interviewer);
   useEffect(() => {
     if (
       interview &&
@@ -85,16 +84,12 @@ const InterviewResultForm = (props) => {
   }, [_id, interview, location.pathname, setValue]);
 
   const onSubmit = (data) => {
-    console.log(data);
     if (location.pathname === "/interviewresult/add/interviewresultform") {
-      console.log("add");
-
       dispatch(actions.createInterviewResultRequest(data));
     }
     if (
       location.pathname === `/interviewresult/edit/interviewresultform/${_id}`
     ) {
-      console.log("upadte");
       dispatch(
         actions.updateInterviewResultRequest({
           interviewData: data,

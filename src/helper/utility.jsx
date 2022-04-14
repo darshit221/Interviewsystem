@@ -12,7 +12,7 @@ export function clearToken() {
 export function getToken() {
   try {
     const authToken = localStorage.getItem("auth_token");
-    console.log("utily:", authToken);
+
     const user = localStorage.user ? JSON.parse(localStorage.user) : null;
     return new Map({ authToken, user });
   } catch (err) {
