@@ -66,7 +66,9 @@ function InterviewResult() {
                     </td>
                     <td>
                       <span className="fw-normal">
-                        {interviewer.map((val) => {})}
+                        {interviewer.map((val) => (
+                          <span>{val}</span>
+                        ))}
                       </span>
                     </td>
                     <td>
