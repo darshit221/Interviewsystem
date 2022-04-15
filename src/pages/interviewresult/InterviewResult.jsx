@@ -37,7 +37,7 @@ function InterviewResult() {
           className="text-dark"
         >
           <FontAwesomeIcon icon={faPlus} className="me-2" />
-          Add User
+          Add Interview Result
         </Button>
       </div>
       <Card border="light" className="table-wrapper table-responsive shadow-sm">
@@ -54,6 +54,7 @@ function InterviewResult() {
             </thead>
             <tbody>
               {interviewerList.map((value, index) => {
+                console.log("......", value);
                 const { _id, name, interviewer, rounds } = value;
                 return (
                   <tr key={_id}>
@@ -64,7 +65,9 @@ function InterviewResult() {
                       <span className="fw-normal">{name}</span>
                     </td>
                     <td>
-                      <span className="fw-normal">{interviewer}</span>
+                      <span className="fw-normal">
+                        {interviewer.map((val) => {})}
+                      </span>
                     </td>
                     <td>
                       <span className="fw-normal">{rounds}</span>

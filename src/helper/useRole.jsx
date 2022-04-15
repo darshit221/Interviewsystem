@@ -1,9 +1,8 @@
 import { useSelector } from "react-redux";
 
 function useRole() {
-  const { user } = useSelector((state) => state.auth);
-  const { role } = user;
-  if ((role && role.name === "admin") || (role && role.name === "hr")) {
+  const { role } = useSelector((state) => state.auth?.user);
+  if (role?.name === "admin" || role?.name === "hr") {
     return true;
   } else {
     return false;

@@ -35,7 +35,7 @@ function User() {
           className="text-dark"
         >
           <FontAwesomeIcon icon={faPlus} className="me-2" />
-          Add Details
+          Add User
         </Button>
       </div>
       <Card border="light" className="table-wrapper table-responsive shadow-sm">

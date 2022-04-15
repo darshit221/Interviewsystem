@@ -397,12 +397,12 @@ function InterviewResultForm() {
             </Col>
           </Row>
 
-          <div className="mt-3">
+          <div className="m-2">
             <Button variant="primary" type="submit">
               Submit
             </Button>
             <Button
-              className="mx-5"
+              className="m-2"
               variant="primary"
               type="reset"
               as={Link}

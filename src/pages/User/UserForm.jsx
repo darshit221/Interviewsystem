@@ -278,12 +278,10 @@ function UserForm() {
                 type="file"
                 label="profile picture"
                 sx={{ width: "100%" }}
-                multiple
                 variant="outlined"
                 accept={["image/jpeg", "image/png", "image/bmp"]}
                 {...register("image")}
                 placeholder="Enter your first name"
-                error={!!errors.image}
               />
               <p className="text-danger">
                 {errors.image && errors.image.message}
@@ -291,12 +289,12 @@ function UserForm() {
             </Form.Group>
           </Row>
 
-          <div className="mt-3">
+          <div className="m-2">
             <Button variant="primary" type="submit">
               Submit
             </Button>
             <Button
-              className="mx-5"
+              className="m-2"
               variant="primary"
               type="reset"
               as={Link}

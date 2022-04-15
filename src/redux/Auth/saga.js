@@ -20,6 +20,7 @@ export function* loginRequest({ payload }) {
       throw new Error("Invalid credentials provided.");
     }
   } catch (error) {
+    alert("Invalid credentials provided.");
     yield put(actions.loginFailure(error.message, error.data || {}));
   }
 }
