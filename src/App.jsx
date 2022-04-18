@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 
 import { Routes } from "./routes";
 
-import Boot from "./redux/boot";
+import Boot from "./helper/boot";
 
 import Preloader from "./components/Preloader";
 import { history } from "./redux/store";

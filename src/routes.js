@@ -3,14 +3,14 @@ import { Route, Switch, Redirect } from "react-router-dom";
 
 // pages
 
-import InterviewResult from "./pages/interviewresult/InterviewResult";
+import InterviewResult from "./pages/InterviewResult/InterviewResult";
 import User from "./pages/User/User";
 import Signin from "./pages/login";
 
 // components
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
-import InterviewResultForm from "./pages/interviewresult/InterviewResultForm";
+import InterviewResultForm from "./pages/InterviewResult/InterviewResultForm";
 import UserForm from "./pages/User/UserForm";
 import { useSelector } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
@@ -23,6 +23,7 @@ const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
     render={(props) =>
       isLoggedIn ? (
         <>
+          {console.log("True Restricted : ", props)}
           <Sidebar />
           <main className="content">
             <Navbar />
@@ -30,12 +31,15 @@ const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
           </main>
         </>
       ) : (
-        <Redirect
-          to={{
-            pathname: "/",
-            state: { from: props.location },
-          }}
-        />
+        <>
+          <Redirect
+            to={{
+              pathname: "/",
+              state: { from: props.location },
+            }}
+          />
+          {console.log("False Restricted : ", props)}
+        </>
       )
     }
   />
@@ -46,14 +50,20 @@ const UnRestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
     {...rest}
     render={(props) =>
       !isLoggedIn ? (
-        <Component {...props} />
+        <>
+          <Component {...props} />
+          {console.log("True UnRestricted : ", props)}
+        </>
       ) : (
-        <Redirect
-          to={{
-            pathname: "/interviewresult",
-            state: { from: props.location },
-          }}
-        />
+        <>
+          <Redirect
+            to={{
+              pathname: "/interviewresult",
+              state: { from: props.location },
+            }}
+          />
+          {console.log("False UnRestricted : ", props)}
+        </>
       )
     }
   />

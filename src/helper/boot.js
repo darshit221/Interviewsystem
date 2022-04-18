@@ -1,5 +1,5 @@
-import { store } from "./store";
-import authActions from "./Auth/action";
+import { store } from "../redux/store";
+import authActions from "../redux/Auth/action";
 
 export default () =>
   new Promise(() => {
