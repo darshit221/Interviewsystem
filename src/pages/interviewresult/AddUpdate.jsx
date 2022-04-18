@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import actions from "../../redux/InterviewResult/action";
-import Preloader from "../../components/Preloader";
+import Preloader from "../../Components/Preloader";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;

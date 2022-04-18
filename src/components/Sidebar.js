@@ -18,7 +18,7 @@ import { routes } from "../routes";
 import ReactHero from "../assets/img/technologies/react-hero-logo.svg";
 import ProfilePicture from "../assets/img/profile-picture.jpg";
 import { useSelector, useDispatch } from "react-redux";
-import useRole from "../helper/useRole";
+import useRole from "../Helper/useRole";
 
 function Sidebar(props = {}) {
   const location = useLocation();

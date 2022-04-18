@@ -13,8 +13,8 @@ import { LocalizationProvider } from "@mui/lab";
 import { routes } from "../../routes";
 import roleActions from "../../redux/Role/action";
 import actions from "../../redux/User/action";
-import Preloader from "../../components/Preloader";
-import schema from "../../helper/ValidationSchema";
+import Preloader from "../../Components/Preloader";
+import schema from "../../Helper/ValidationSchema";
 
 function UserForm() {
   const { location } = useHistory();

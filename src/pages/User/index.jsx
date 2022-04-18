@@ -2,31 +2,27 @@ import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faPlus, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { Card, Button, Table } from "@themesberg/react-bootstrap";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { confirm } from "react-confirm-box";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { routes } from "../../routes";
-import actions from "../../redux/InterviewResult/action";
-import Preloader from "../../components/Preloader";
+import actions from "../../redux/User/action";
+import Preloader from "../../Components/Preloader";
 
-function InterviewResult() {
+function User() {
   const dispatch = useDispatch();
+  const { userList, loading } = useSelector((state) => state.user);
 
   useEffect(() => {
-    dispatch(actions.getInterviewResultRequest());
+    dispatch(actions.getUserRequest());
   }, [dispatch]);
 
-  const { interviewerList, loading } = useSelector(
-    (state) => state.interviewResult
-  );
-
-  const interviewResultDeleteHandler = async (_id) => {
+  const UserDeleteHandler = async (_id) => {
     const result = await confirm("Are you sure?");
     if (result) {
-      dispatch(actions.deleteInterviewResultRequest(_id));
+      dispatch(actions.deleteUserRequest(_id));
       return;
     }
-    console.log("You click No!");
   };
 
   return (
@@ -37,11 +33,11 @@ function InterviewResult() {
           as={Link}
           variant="secondary"
           size="xm"
-          to={routes.AddInterviewResultForm.path}
+          to={routes.AddUserForm.path}
           className="text-dark"
         >
           <FontAwesomeIcon icon={faPlus} className="me-2" />
-          Add Interview Result
+          Add User
         </Button>
       </div>
       <Card border="light" className="table-wrapper table-responsive shadow-sm">
@@ -50,32 +46,30 @@ function InterviewResult() {
             <thead>
               <tr>
                 <th className="border-bottom">#</th>
-                <th className="border-bottom">User Name</th>
-                <th className="border-bottom">Interviwer Name</th>
-                <th className="border-bottom">Round</th>
+                <th className="border-bottom">First Name</th>
+                <th className="border-bottom">Last Name</th>
+                <th className="border-bottom">Birth Date</th>
                 <th className="border-bottom">Action</th>
               </tr>
             </thead>
             <tbody>
-              {interviewerList.map((value, index) => {
-                const { _id, name, interviewer, rounds } = value;
+              {userList.map((value, index) => {
+                const { _id, first_name, last_name, dateOfBirth } = value;
                 return (
                   <tr key={_id}>
                     <td>
                       <span className="fw-normal">{index + 1}</span>
                     </td>
                     <td>
-                      <span className="fw-normal">{name}</span>
+                      <span className="fw-normal">{first_name}</span>
+                    </td>
+                    <td>
+                      <span className="fw-normal">{last_name}</span>
                     </td>
                     <td>
                       <span className="fw-normal">
-                        {interviewer.map((val) => (
-                          <span>{val}</span>
-                        ))}
+                        {dateOfBirth.slice(0, 10)}
                       </span>
-                    </td>
-                    <td>
-                      <span className="fw-normal">{rounds}</span>
                     </td>
                     <td>
                       <Button
@@ -83,7 +77,7 @@ function InterviewResult() {
                         variant="light"
                         className="me-3 text-info"
                         as={Link}
-                        to={`/interviewresult/edit/${_id}`}
+                        to={`/user/edit/${_id}`}
                       >
                         <FontAwesomeIcon icon={faEdit} />
                       </Button>
@@ -92,7 +86,7 @@ function InterviewResult() {
                         size="sm"
                         variant="light"
                         className="me-3 text-danger"
-                        onClick={() => interviewResultDeleteHandler(_id)}
+                        onClick={() => UserDeleteHandler(_id)}
                       >
                         <FontAwesomeIcon icon={faTrashAlt} />
                       </Button>
@@ -107,5 +101,4 @@ function InterviewResult() {
     </>
   );
 }
-
-export default InterviewResult;
+export default User;

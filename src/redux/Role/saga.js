@@ -1,6 +1,6 @@
 import { all, put, takeLatest } from "redux-saga/effects";
 import roleActions from "./action";
-import { axiosGet } from "../../helper/axiosHelper";
+import { axiosGet } from "../../Helper/axiosHelper";
 
 export function* getRole() {
   try {
