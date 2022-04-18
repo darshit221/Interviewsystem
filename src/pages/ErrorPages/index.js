@@ -12,7 +12,7 @@ import {
 
 import { Link } from "react-router-dom";
 
-import { routes } from "../../routes";
+import { routes } from "../../Routes";
 import NotFoundImage from "../../assets/img/illustrations/404.svg";
 
 function NotFound() {

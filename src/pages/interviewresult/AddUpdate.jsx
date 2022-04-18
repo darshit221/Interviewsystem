@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Col, Row, Card, Form, Button } from "@themesberg/react-bootstrap";
 import { useForm } from "react-hook-form";
-import { routes } from "../../routes";
+import { routes } from "../../Routes";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -14,7 +14,7 @@ import {
   TextField,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import actions from "../../redux/InterviewResult/action";
+import actions from "../../Redux/InterviewResult/action";
 import Preloader from "../../Components/Preloader";
 
 const ITEM_HEIGHT = 48;

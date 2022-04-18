@@ -5,8 +5,8 @@ import { Card, Button, Table } from "@themesberg/react-bootstrap";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { confirm } from "react-confirm-box";
-import { routes } from "../../routes";
-import actions from "../../redux/InterviewResult/action";
+import { routes } from "../../Routes";
+import actions from "../../Redux/InterviewResult/action";
 import Preloader from "../../Components/Preloader";
 
 function InterviewResult() {

@@ -1,9 +1,9 @@
 import React, { Suspense } from "react";
 
-import { Routes } from "./routes";
+import { Routes } from "./Routes";
 import Boot from "./Helper/boot";
 import Preloader from "./Components/Preloader";
-import { history } from "./redux/store";
+import { history } from "./Redux/store";
 
 function App() {
   return (
