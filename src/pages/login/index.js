@@ -54,7 +54,7 @@ function Signin() {
                         type="email"
                         placeholder="example@company.com"
                         {...register("email", {
-                          required: "requierd",
+                          required: "Enter Your Email",
                           pattern: {
                             value: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/,
                             message: "Invalid",
