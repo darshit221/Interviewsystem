@@ -8,7 +8,6 @@ export function* createInterviewResult({ interviewData }) {
     const { data } = yield axiosPost(interviewData, `submitInterView`);
     yield put(actions.createInterviewResultSuccess(data.data));
     yield put(push("/interviewresult"));
-    alert("add successfully");
   } catch (error) {
     yield put(
       actions.createInterviewResultFailure(error.message, error.data || {})

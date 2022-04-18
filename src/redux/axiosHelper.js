@@ -36,9 +36,6 @@ const axiosGet = async (url) => {
 
 const axiosDelete = async (url) => {
   let request = await axios.delete(`${BASE_URL}/${url}`, getHeaders());
-  if (request.data && request.data.message) {
-    alert("delete sucessfully");
-  }
   return request;
 };
 
@@ -46,9 +43,6 @@ const axiosPut = async (data, url) => {
   try {
     let request = await axios.put(`${BASE_URL}/${url}`, data, getHeaders());
 
-    if (request.data && request.data.message) {
-      alert("Update sucessfully");
-    }
     return request;
   } catch (error) {
     throw error.response.data;

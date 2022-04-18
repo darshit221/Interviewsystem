@@ -20,7 +20,7 @@ import ProfilePicture from "../assets/img/profile-picture.jpg";
 import { useSelector, useDispatch } from "react-redux";
 import useRole from "../helper/useRole";
 
-export default (props = {}) => {
+function Sidebar(props = {}) {
   const location = useLocation();
   const { pathname } = location;
   const [show, setShow] = useState(false);
@@ -161,4 +161,5 @@ export default (props = {}) => {
       </CSSTransition>
     </>
   );
-};
+}
+export default Sidebar;

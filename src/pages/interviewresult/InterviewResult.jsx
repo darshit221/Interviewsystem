@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { confirm } from "react-confirm-box";
 import { routes } from "../../routes";
 import actions from "../../redux/InterviewResult/action";
+import Preloader from "../../components/Preloader";
 
 function InterviewResult() {
   const dispatch = useDispatch();
@@ -15,7 +16,9 @@ function InterviewResult() {
     dispatch(actions.getInterviewResultRequest());
   }, [dispatch]);
 
-  const { interviewerList } = useSelector((state) => state.interviewResult);
+  const { interviewerList, loading } = useSelector(
+    (state) => state.interviewResult
+  );
 
   const interviewResultDeleteHandler = async (_id) => {
     const result = await confirm("Are you sure?");
@@ -28,6 +31,7 @@ function InterviewResult() {
 
   return (
     <>
+      <Preloader show={loading ? true : false} />
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
         <Button
           as={Link}
@@ -54,7 +58,6 @@ function InterviewResult() {
             </thead>
             <tbody>
               {interviewerList.map((value, index) => {
-                console.log("......", value);
                 const { _id, name, interviewer, rounds } = value;
                 return (
                   <tr key={_id}>
@@ -80,7 +83,7 @@ function InterviewResult() {
                         variant="light"
                         className="me-3 text-info"
                         as={Link}
-                        to={`/interviewresult/edit/interviewresultform/${_id}`}
+                        to={`/interviewresult/edit/${_id}`}
                       >
                         <FontAwesomeIcon icon={faEdit} />
                       </Button>

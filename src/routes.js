@@ -5,7 +5,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 
 import InterviewResult from "./pages/interviewresult/InterviewResult";
 import User from "./pages/User/User";
-import Signin from "./pages/login/Signin";
+import Signin from "./pages/login";
 
 // components
 import Sidebar from "./components/Sidebar";
@@ -15,7 +15,7 @@ import UserForm from "./pages/User/UserForm";
 import { useSelector } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 import useRole from "./helper/useRole";
-import NotFound from "./pages/ErrorPages/NotFound";
+import NotFound from "./pages/ErrorPages";
 
 const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
   <Route
@@ -61,7 +61,7 @@ const UnRestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
 
 export const Routes = ({ history }) => {
   const isLoggedIn = useSelector((state) => state.auth.token !== null);
-  console.log(useRole());
+
   return (
     <ConnectedRouter history={history}>
       <Switch>
@@ -125,13 +125,13 @@ export const routes = {
   InterviewResult: { path: "/interviewresult" },
   User: { path: "/user" },
   AddInterviewResultForm: {
-    path: "/interviewresult/add/interviewresultform",
+    path: "/interviewresult/add",
   },
   EditInterviewResultForm: {
-    path: "/interviewresult/edit/interviewresultform/:_id",
+    path: "/interviewresult/edit/:_id",
   },
-  AddUserForm: { path: "/user/add/userform" },
-  EditUserForm: { path: "/user/edit/userform/:_id" },
+  AddUserForm: { path: "/user/add" },
+  EditUserForm: { path: "/user/edit/:_id" },
   Signup: { path: "/examples/sign-up" },
   NotFound: { path: "*" },
 };

@@ -2,7 +2,6 @@ import roleActionss from "./action";
 
 const initState = {
   loading: false,
-  message: null,
   role: [],
 };
 
@@ -13,7 +12,6 @@ export default (state = initState, roleActions) => {
         ...state,
         errorData: {},
         loading: true,
-        message: null,
       };
     case roleActionss.GET_ROLE_SUCCESS:
       return {
@@ -25,7 +23,6 @@ export default (state = initState, roleActions) => {
       return {
         ...state,
         loading: false,
-        message: roleActions.payload,
       };
     default:
       return state;

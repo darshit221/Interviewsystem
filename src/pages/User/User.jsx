@@ -7,10 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { routes } from "../../routes";
 import actions from "../../redux/User/action";
+import Preloader from "../../components/Preloader";
 
 function User() {
   const dispatch = useDispatch();
-  const { userList } = useSelector((state) => state.user);
+  const { userList, loading } = useSelector((state) => state.user);
 
   useEffect(() => {
     dispatch(actions.getUserRequest());
@@ -26,6 +27,7 @@ function User() {
 
   return (
     <>
+      <Preloader show={loading ? true : false} />
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
         <Button
           as={Link}
@@ -75,7 +77,7 @@ function User() {
                         variant="light"
                         className="me-3 text-info"
                         as={Link}
-                        to={`/user/edit/userform/${_id}`}
+                        to={`/user/edit/${_id}`}
                       >
                         <FontAwesomeIcon icon={faEdit} />
                       </Button>

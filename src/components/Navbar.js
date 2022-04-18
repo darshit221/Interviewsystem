@@ -1,15 +1,13 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { faUserCircle } from "@fortawesome/free-regular-svg-icons";
 import {
   Nav,
-  Form,
   Image,
   Navbar,
   Dropdown,
   Container,
-  InputGroup,
 } from "@themesberg/react-bootstrap";
 import Profile3 from "../assets/img/profile-picture.jpg";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,18 +21,7 @@ export default (props) => {
     <Navbar variant="dark" expanded className="ps-0 pe-2 pb-0">
       <Container fluid className="px-0">
         <div className="d-flex justify-content-between w-100">
-          <div className="d-flex align-items-center">
-            <Form className="navbar-search">
-              <Form.Group id="topbarSearch">
-                <InputGroup className="input-group-merge search-bar">
-                  <InputGroup.Text>
-                    <FontAwesomeIcon icon={faSearch} />
-                  </InputGroup.Text>
-                  <Form.Control type="text" placeholder="Search" />
-                </InputGroup>
-              </Form.Group>
-            </Form>
-          </div>
+          <div className="d-flex align-items-center"></div>
           <Nav className="align-items-center">
             <Dropdown as={Nav.Item}>
               <Dropdown.Toggle as={Nav.Link} className="pt-1 px-0">

@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 import { routes } from "../../routes";
 import NotFoundImage from "../../assets/img/illustrations/404.svg";
 
-export default () => {
+function NotFound() {
   return (
     <main>
       <section className="vh-100 d-flex align-items-center justify-content-center">
@@ -55,4 +55,5 @@ export default () => {
       </section>
     </main>
   );
-};
+}
+export default NotFound;

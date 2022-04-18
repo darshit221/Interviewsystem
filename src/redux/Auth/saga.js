@@ -14,13 +14,11 @@ export function* loginRequest({ payload }) {
       yield localStorage.setItem("auth_token", token);
       yield localStorage.setItem("user", JSON.stringify(data.data));
       yield put(actions.loginSuccess(data.data, token));
-      alert("Login Sucessfull");
       yield put(push(routes.InterviewResult.path));
     } else {
       throw new Error("Invalid credentials");
     }
   } catch (error) {
-    alert("Invalid credentials provided.");
     yield put(actions.loginFailure(error.message, error.data || {}));
   }
 }

@@ -4,7 +4,6 @@ const initState = {
   interview: {},
   interviewerList: [],
   loading: false,
-  message: null,
   action: null,
   interviewer: [
     {

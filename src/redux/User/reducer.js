@@ -4,7 +4,6 @@ const initState = {
   singleUser: {},
   userList: [],
   loading: false,
-  message: null,
   action: null,
 };
 

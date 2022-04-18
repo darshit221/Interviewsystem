@@ -9,7 +9,6 @@ export function* createUser({ userData }) {
 
     yield put(actions.createUserSuccess(data.data));
     yield put(push("/user"));
-    alert("add");
   } catch (error) {
     yield put(actions.createUserFailure(error.message, error.data || {}));
   }
