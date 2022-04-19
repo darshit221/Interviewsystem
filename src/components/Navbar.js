@@ -11,7 +11,7 @@ import {
 } from "@themesberg/react-bootstrap";
 import Profile3 from "../assets/img/profile-picture.jpg";
 import { useDispatch, useSelector } from "react-redux";
-import authActions from "../redux/Auth/action";
+import authActions from "../Redux/Auth/action";
 
 export default (props) => {
   const dispatch = useDispatch();

@@ -14,7 +14,7 @@ import {
 import BgImage from "../../assets/img/illustrations/signin.svg";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import authActions from "../../redux/Auth/action";
+import authActions from "../../Redux/Auth/action";
 
 function Signin() {
   const dispatch = useDispatch();

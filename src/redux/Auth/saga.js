@@ -1,9 +1,9 @@
 import { all, takeEvery, put, takeLatest } from "redux-saga/effects";
 import actions from "./action";
-import { axiosPost } from "../axiosHelper";
+import { axiosPost } from "../../Helper/axiosHelper";
 import { push } from "connected-react-router";
-import { routes } from "../../routes";
-import { clearToken, getToken } from "../../helper/utility";
+import { routes } from "../../Routes";
+import { clearToken, getToken } from "../../Helper/utility";
 
 export function* loginRequest({ payload }) {
   try {

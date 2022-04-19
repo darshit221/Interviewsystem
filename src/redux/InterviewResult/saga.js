@@ -1,6 +1,11 @@
 import { all, takeEvery, takeLatest, put } from "redux-saga/effects";
 import actions from "./action";
-import { axiosPost, axiosGet, axiosDelete, axiosPut } from "../axiosHelper";
+import {
+  axiosPost,
+  axiosGet,
+  axiosDelete,
+  axiosPut,
+} from "../../Helper/axiosHelper";
 import { push } from "connected-react-router";
 
 export function* createInterviewResult({ interviewData }) {

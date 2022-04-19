@@ -5,9 +5,9 @@ import { Card, Button, Table } from "@themesberg/react-bootstrap";
 import { confirm } from "react-confirm-box";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { routes } from "../../routes";
-import actions from "../../redux/User/action";
-import Preloader from "../../components/Preloader";
+import { routes } from "../../Routes";
+import actions from "../../Redux/User/action";
+import Preloader from "../../Components/Preloader";
 
 function User() {
   const dispatch = useDispatch();

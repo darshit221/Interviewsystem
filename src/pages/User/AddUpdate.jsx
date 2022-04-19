@@ -10,11 +10,11 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { LocalizationProvider } from "@mui/lab";
-import { routes } from "../../routes";
-import roleActions from "../../redux/Role/action";
-import actions from "../../redux/User/action";
-import Preloader from "../../components/Preloader";
-import schema from "../../helper/ValidationSchema";
+import { routes } from "../../Routes";
+import roleActions from "../../Redux/Role/action";
+import actions from "../../Redux/User/action";
+import Preloader from "../../Components/Preloader";
+import schema from "../../Helper/ValidationSchema";
 
 function UserForm() {
   const { location } = useHistory();

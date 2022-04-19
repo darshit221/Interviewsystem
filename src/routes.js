@@ -3,19 +3,19 @@ import { Route, Switch, Redirect } from "react-router-dom";
 
 // pages
 
-import InterviewResult from "./pages/interviewresult/InterviewResult";
-import User from "./pages/User/User";
-import Signin from "./pages/login";
+import InterviewResult from "./Pages/InterviewResult/index";
+import User from "./Pages/User";
+import Signin from "./Pages/login";
 
-// components
-import Sidebar from "./components/Sidebar";
-import Navbar from "./components/Navbar";
-import InterviewResultForm from "./pages/interviewresult/InterviewResultForm";
-import UserForm from "./pages/User/UserForm";
+// Components
+import Sidebar from "./Components/Sidebar";
+import Navbar from "./Components/Navbar";
+import InterviewResultForm from "./Pages/InterviewResult/AddUpdate";
+import UserForm from "./Pages/User/AddUpdate";
 import { useSelector } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
-import useRole from "./helper/useRole";
-import NotFound from "./pages/ErrorPages";
+import useRole from "./Helper/useRole";
+import NotFound from "./Pages/ErrorPages/index";
 
 const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
   <Route

@@ -13,12 +13,12 @@ import {
   Navbar,
 } from "@themesberg/react-bootstrap";
 import { Link } from "react-router-dom";
-import authActions from "../redux/Auth/action";
-import { routes } from "../routes";
+import authActions from "../Redux/Auth/action";
+import { routes } from "../Routes";
 import ReactHero from "../assets/img/technologies/react-hero-logo.svg";
 import ProfilePicture from "../assets/img/profile-picture.jpg";
 import { useSelector, useDispatch } from "react-redux";
-import useRole from "../helper/useRole";
+import useRole from "../Helper/useRole";
 
 function Sidebar(props = {}) {
   const location = useLocation();
