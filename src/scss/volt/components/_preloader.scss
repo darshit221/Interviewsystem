@@ -1,0 +1,38 @@
+.preloader {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    opacity: 0.9;
+    // background-color: #4c5680;
+    left: 0;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    z-index: 9999;
+    @include transition(display .1s);
+
+    // .loader-element {
+
+    //     @include transition(spin .3s linear infinite);
+    //     -webkit-animation:spin 3s linear infinite;
+    //     -moz-animation:spin 3s linear infinite;
+    //     animation:spin 3s linear infinite;
+    // }
+
+    &.show {
+display: none;
+@include transition(display .1s);
+    
+
+        .loader-element {
+            display: block !important;
+           
+        }
+    }
+}
+
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
